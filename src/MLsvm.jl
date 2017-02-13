@@ -1,10 +1,5 @@
 
-using PyCall
-
-@pyimport sklearn.datasets as dat
-
 include("utils/utils.jl")
-include("svm_example.jl")
 
 typealias Arr Union{Vector, Matrix} 
 
@@ -152,6 +147,8 @@ end
 function error_(i,model)
     return predict_row(model.X[i,:],model) - model.y[i]
 end
+
+
 
 function svm_test()
     X, y = dat.make_classification(n_samples=1200, n_features=10, n_informative=5,

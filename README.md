@@ -6,8 +6,8 @@ lightML.jl is a collection of reimplementation of general machine learning algor
 ## To-do List
 
 - [x] Support vector machine(SVM)
-- [ ] Linear regression
-- [ ] Logistic regression
+- [x] Linear regression
+- [x] Logistic regression
 - [ ] Neural network
 - [ ] K-Nearst neighbors
 - [ ] K-Means 

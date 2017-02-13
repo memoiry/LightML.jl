@@ -1,3 +1,7 @@
+using ForwardDiff
+using PyCall
+
+@pyimport sklearn.datasets as dat
 
 
 function one_hot(y)
@@ -114,6 +118,11 @@ function binary_crossentropy(actual, predicted)
     predicted = clamp(predicted, 1e-15, 1 - 1e-15)
     return mean(-sum(actual .* log(predicted) +
                            (1 - actual) .* log(1 - predicted)))
+end
+
+
+function sigmoid(x)
+    return 0.5 * (tanh(x) + 1)
 end
 
 

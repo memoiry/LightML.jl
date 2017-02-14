@@ -1,7 +1,7 @@
 # lightML.jl
 
 
-lightML.jl is a collection of reimplementation of general machine learning algorithm in Julia
+lightML.jl is a collection of reimplementation of general machine learning algorithm in Julia. I will update it for learning purpose.
 
 ## To-do List
 

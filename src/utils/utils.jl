@@ -125,8 +125,24 @@ function sigmoid(x)
     return 0.5 * (tanh(x) + 1)
 end
 
+function make_cla()
+    X, y = dat.make_classification(n_samples=1200, n_features=10, n_informative=5,
+                               random_state=1111, n_classes=2, class_sep=1.75,)
+    # Convert y to {-1, 1}
+    y = (y * 2) - 1
+    X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=0.8,
+                                                        rand_seed=1111)
+    X_train, X_test, y_train, y_test
+end
 
-
+function make_reg()
+    X, y = dat.make_regression(n_samples=10000, n_features=100,
+                           n_informative=75, n_targets=1, noise=0.05,
+                           random_state=1111, bias=0.5)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=0.8,
+                                                        rand_seed=1111)
+    X_train, X_test, y_train, y_test
+end
 
 
 

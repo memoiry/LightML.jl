@@ -155,8 +155,7 @@ function svm_test()
                                random_state=1111, n_classes=2, class_sep=1.75,)
     # Convert y to {-1, 1}
     y = (y * 2) - 1
-    X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=0.8,
-                                                        rand_seed=1111)
+    X_train, X_test, y_train, y_test = make_cla
 
     for kernel in ["linear", "rbf"]
         model = svm(X_train, y_train, max_iter=500, kernel=kernel, C=0.6)

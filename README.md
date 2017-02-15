@@ -11,7 +11,7 @@ lightML.jl is a collection of reimplementation of general machine learning algor
 - [ ] Neural network
 - [ ] K-Nearst neighbors
 - [ ] K-Means 
-- [ ] Naive bayes
+- [x] Naive bayes
 - [ ] Random Forests
 - [ ] PCA
 - [ ] Factorization machines

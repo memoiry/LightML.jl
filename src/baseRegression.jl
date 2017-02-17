@@ -143,11 +143,7 @@ end
 
 function regression_test()
     # Generate a random regression problem
-    X, y = dat.make_regression(n_samples=10000, n_features=100,
-                           n_informative=75, n_targets=1, noise=0.05,
-                           random_state=1111, bias=0.5)
-    X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=0.8,
-                                                        rand_seed=1111)
+    X_train, X_test, y_train, y_test = make_reg()
 
     model = LinearRegression(lr=0.01, max_iters=200, reg="l1", C=0.03)
     train!(model,X_train, y_train)

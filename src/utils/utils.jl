@@ -144,6 +144,12 @@ function make_reg()
     X_train, X_test, y_train, y_test
 end
 
+function make_blo()
+    X, y = dat.make_blobs(centers=4, n_samples=500, n_features=2,
+                          random_state=42)
+    return  X, y
+end
+
 
 
 

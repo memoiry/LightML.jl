@@ -1,6 +1,7 @@
 include("utils/utils.jl")
 
 using Gadfly
+using DataFrames    
 #Partition a dataset into K clusters.
 
 #Finds clusters by repeatedly assigning each data point to the cluster with
@@ -28,7 +29,8 @@ using Gadfly
 
 
 type Kmeans
-    clusters::Array{Float64,3}
+    clusters::Dict{Any,Matrix}
+    clu_ind::Dict{Any,Vector}
     k::Integer
     X::Matrix
     max_iter::Integer
@@ -37,14 +39,15 @@ type Kmeans
 end
 
 function Kmeans(;
-                clusters::Array{Float64,3} = zeros(3,3,3),
+                clusters::Dict{Any,Matrix} = Dict{Any,Matrix}(),
                 k::Integer = 2,
                 X::Matrix = zeros(2,2),
                 max_iter::Integer = 150,
                 centroid::Matrix = zeros(2,2),
-                init::AbstractString = "++")
+                init::AbstractString = "++",
+                clu_ind::Dict{Any,Vector} = Dict{Any,Vector}())
 
-    return Kmeans(clusters, k, X, max_iter, centroid , init)
+    return Kmeans(clusters, clu_ind, k, X, max_iter, centroid , init)
 end
 
 
@@ -56,7 +59,7 @@ function predict!(model::Kmeans)
 
     initialize_centroid(model)
     for i in 1:model.max_iter
-        centroid_old = model.centroid
+        centroid_old = copy(model.centroid)
         assign_clusters!(model)
         update_centroid!(model)
         if is_converged(centroid_old, model.centroid)
@@ -66,23 +69,32 @@ function predict!(model::Kmeans)
 end
 
 function update_centroid!(model)
+    @show model.centroid
     for i = 1:model.k
-        model.centroid[i,:] = mean(model.clusters[:,:,i],1)
+        model.centroid[i,:] = mean(model.clusters[i],1)
     end
-
+    @show model.centroid
 end
 
 
 function assign_clusters!(model::Kmeans)
     n = size(model.X,1)
-    model.clusters = Dict
+    model.clusters = Dict{Any,Matrix}()
+    model.clu_ind = Dict{Any,Vector}()
     for i = 1:n 
         dist = zeros(model.k)
         for j = 1:length(dist)
-            dist[j] = model.centroid[j,:]-model.X[i,:]
+            dist[j] = norm(model.centroid[j,:]-model.X[i,:])
         end
         clu = indmin(dist)
-        model.clusters[:,:,clu] = vcat(model.clusters[:,:,clu], model.X[i,:])
+        if haskey(model.clusters,clu)
+            model.clusters[clu] = vcat(model.clusters[clu], model.X[i,:]')
+            model.clu_ind[clu] = vcat(model.clu_ind[clu], i)
+        else
+            model.clusters[clu] = model.X[i,:]'
+            model.clu_ind[clu] = [i]
+        end
+
     end
 end
 
@@ -111,7 +123,6 @@ function find_next_centroid(model, num)
     end
     prob = res/sum(res)
     cum = cumsum(prob, 1)
-    @show cum
     r = rand()
     x_sel = model.X[cum .> r,:]
     x_sel = x_sel[1,:]
@@ -122,43 +133,51 @@ end
 
 function is_converged(x::Matrix,
                       y::Matrix)
-    return norm(x-y) == 0 ?true:false
+    return norm(x-y) == 0 
 end
 
 
 
 function plot_!(model::Kmeans)
-    x_ = []
+    y_ = []
     for i = 1:model.k
-        push!(x_,model.clusters[:,:,i])
+        push!(y_,model.clu_ind[i])
     end
-    x_ = reduce(vcat,x_)
+    y_ = reduce(vcat,y_)
+    x_ = zeros(size(y_,1),2)
+    for i = 1:size(x_,1)
+        x_[i,:] = model.X[y_[i],:]
+    end
+    @show size(x_)
     x_sep = x_[:,1]
-    y_sep = y_[:,2]
+    y_sep = x_[:,2]
     num_ = zeros(model.k)
     for i = 1:model.k
-        num_[i] = size(model.clusters[:,:,i],1)
+        num_[i] = size(model.clusters[i],1)
     end
+    num_ = convert(Array{Int,1},num_)
     rep = zeros(sum(num_))
     for i = 1:model.k
         for j = 1:num_[i]
+            j = convert(Int,j)
             if i == 1
                 rep[j] = i
             else
-                rep[sum(num_[1:i])+j] = i
+                kk = i-1
+                rep[sum(num_[1:kk])+j] = i
             end
         end
     end
     df = DataFrame(x = x_sep,y = y_sep , cluster = rep)
 
     plot(df, x = "x", y = "y", color = "cluster",Geom.point)
-
 end
 
 
-function test_kmeans()
+function test_kmeans_speed()
     X, y = make_blo()
     clu = length(unique(y))
+    @show clu
     model = Kmeans(k=clu)
     train!(model,X)
     predict!(model)
@@ -166,7 +185,15 @@ function test_kmeans()
 end
 
 
-
+function test_kmeans_random()
+    X, y = make_blo()
+    clu = length(unique(y))
+    @show clu
+    model = Kmeans(k=clu,init="random")
+    train!(model,X)
+    predict!(model)
+    plot_!(model)
+end
 
 
 

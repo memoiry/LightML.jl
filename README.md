@@ -8,10 +8,15 @@ lightML.jl is a collection of reimplementation of general machine learning algor
 - [x] Support vector machine(SVM)
 - [x] Linear regression
 - [x] Logistic regression
-- [ ] Neural network
-- [ ] K-Nearst neighbors
-- [ ] K-Means 
+- [x] spectral clustering
+- [x] K-Nearst neighbors
+- [x] K-Means 
 - [x] Naive bayes
+- [ ] Neural network
+- [ ] LOESS regression
+- [ ] Ridge regression
+- [ ] Gaussian mixture model
+- [ ] Gaussian discriminant analysis
 - [ ] Random Forests
 - [ ] PCA
 - [ ] Factorization machines
@@ -43,5 +48,20 @@ end
 
 ![](https:\/\/ooo.0o0.ooo\/2017\/02\/11\/589ee68aaf56d.png)
 
+### kmeans
+
+```julia
+function test_kmeans_random()
+    X, y = make_blo()
+    clu = length(unique(y))
+    @show clu
+    model = Kmeans(k=clu,init="random")
+    train!(model,X)
+    predict!(model)
+    plot_!(model)
+end
+```
+
+![](https:\/\/ooo.0o0.ooo\/2017\/02\/18\/58a8445e2114b.png)
 
 

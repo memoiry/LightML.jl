@@ -12,7 +12,7 @@ lightML.jl is a collection of reimplementation of general machine learning algor
 - [x] K-Nearst neighbors
 - [x] K-Means 
 - [x] Naive bayes
-- [ ] Neural network
+- [x] Neural network
 - [ ] Hidden Markov Model
 - [ ] Gaussian discriminant analysis
 - [ ] Gaussian mixture model

@@ -1,0 +1,25 @@
+Short observation sequence:
+    ['C1', 'C2', 'C3', 'C4', 'C4', 'C6', 'C7', 'none']
+
+Filtering - distribution over most recent state:
+    onset 0.000     mid 0.000     end 0.000     final 1.000 
+
+Prediction - distribution over next state:
+    onset 0.000     mid 0.000     end 0.000     final 1.000 
+
+Smoothing - distribution over state at each point in time:
+    time 0     onset 1.000     mid 0.000     end 0.000     final 0.000  
+    time 1     onset 1.000     mid 0.000     end 0.000     final 0.000  
+    time 2     onset 0.332     mid 0.668     end 0.000     final 0.000  
+    time 3     onset 0.000     mid 0.997     end 0.003     final 0.000  
+    time 4     onset 0.000     mid 0.938     end 0.062     final 0.000  
+    time 5     onset 0.000     mid 0.000     end 1.000     final 0.000  
+    time 6     onset 0.000     mid 0.000     end 1.000     final 0.000  
+    time 7     onset 0.000     mid 0.000     end 0.000     final 1.000  
+
+Viterbi - predicted state sequence:
+    ['onset', 'onset', 'mid', 'mid', 'mid', 'end', 'end', 'final']
+Viterbi - actual state sequence:
+    ['onset', 'onset', 'mid', 'end', 'end', 'end', 'end', 'final']
+The accuracy of your viterbi classifier on the short data set is 0.75
+The accuracy of your viterbi classifier on the entire data set is 0.75

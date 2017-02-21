@@ -1,0 +1,9 @@
+8
+onset,C1
+onset,C2
+mid,C3
+end,C4
+end,C4
+end,C6
+end,C7
+final,none

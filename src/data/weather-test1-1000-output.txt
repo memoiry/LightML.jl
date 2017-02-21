@@ -1,0 +1,27 @@
+Short observation sequence:
+    ['no', 'no', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'yes']
+
+Filtering - distribution over most recent state:
+    sunny 0.142     rainy 0.600     foggy 0.258 
+
+Prediction - distribution over next state:
+    sunny 0.285     rainy 0.445     foggy 0.270 
+
+Smoothing - distribution over state at each point in time:
+    time 0     sunny 0.747     rainy 0.042     foggy 0.210  
+    time 1     sunny 0.718     rainy 0.033     foggy 0.249  
+    time 2     sunny 0.589     rainy 0.067     foggy 0.344  
+    time 3     sunny 0.356     rainy 0.318     foggy 0.326  
+    time 4     sunny 0.470     rainy 0.115     foggy 0.415  
+    time 5     sunny 0.352     rainy 0.151     foggy 0.496  
+    time 6     sunny 0.100     rainy 0.601     foggy 0.300  
+    time 7     sunny 0.083     rainy 0.672     foggy 0.245  
+    time 8     sunny 0.223     rainy 0.335     foggy 0.441  
+    time 9     sunny 0.142     rainy 0.600     foggy 0.258  
+
+Viterbi - predicted state sequence:
+    ['sunny', 'sunny', 'sunny', 'sunny', 'sunny', 'sunny', 'rainy', 'rainy', 'rainy', 'rainy']
+Viterbi - actual state sequence:
+    ['foggy', 'foggy', 'foggy', 'rainy', 'sunny', 'foggy', 'rainy', 'rainy', 'foggy', 'rainy']
+The accuracy of your viterbi classifier on the short data set is 0.4
+The accuracy of your viterbi classifier on the entire data set is 0.636

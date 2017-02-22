@@ -71,8 +71,9 @@ function matching(mode::Hmm)
         phi[:, i] = phi[:, i] .* model.B[:, model.e_to_i[model.data[i,2]]] 
         phi[:, i] = normalize(phi[:, i])
     end
+    @show eta[:, 1:10]
     state_optim = zeros(n_sample)
-    state_optim[n_sample] = indmax(phi[:, n_sample][1])
+    state_optim[n_sample] = indmax(phi[:, n_sample])
     for i = (n_sample-1):-1:1
         state_optim[i] = eta[convert(Int,state_optim[i+1]), i+1]
     end
@@ -81,7 +82,7 @@ function matching(mode::Hmm)
 end
 
 function learning(model::Hmm)
-
+    
 end
 
 

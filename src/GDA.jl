@@ -11,7 +11,7 @@ end
 
 function GDA(;
                     class_mean=zeros(2,2),
-                    class_var=zeros(2,2),
+                    class_cov=zeros(2,2),
                     class_priors=zeros(2),
                     n_class = 2,
                     class_ = zeros(2))
@@ -26,16 +26,13 @@ function train!(model::GDA, X::Matrix, y::Vector)
     model.class_ = sort(unique(y))
     model.n_class = length(unique(y))
     model.class_mean = zeros(n_feature, model.n_class)
-    model.class_cov = zeros(n_feature, model.feature)
+    model.class_cov = cov(X)
     model.class_priors = zeros(model.n_class)
-
     for (i,class) in enumerate(model.class_)
         X_temp = X[vec(y.==class),:]
         model.class_mean[:,i] = mean(X_temp,1)
-        model.class_var[:,i] = var(X_temp,1)
         model.class_priors[i] = size(X_temp,1)/n_sample
     end
-
 end
 
 function predict(model::GDA,
@@ -51,35 +48,29 @@ end
 function predict(model::GDA,
                  X::Vector)
     temp = zeros(model.n_class)
-    for i = 1:model.n_class
-        prior = log(model.class_priors[i])
-        cond = sum(log_pdf(model, X, i))
-        temp[i] = prior + cond 
+    for (i, class) in enumerate(model.n_class)
+        p = log_pdf(model, X, i)
+        temp[i] = p[1]
     end
-    res = softmax(temp)
+    res = indmax(exp(temp - log(sum(exp(temp)))))
+    @show res
     class = model.class_[res]
     return class
 end
 
 
 function log_pdf(model::GDA,
-                 X::Vector,n::Integer)
-
-    mean_ = vec(model.class_mean[:,n])
-    var_ = vec(model.class_var[:, n])
-    d = sqrt(2*pi*var_)
-    n = exp(-((X-mean_).^2./(2*var_)))
-    return log(n./d)
-end
-
-function post(x::Vector)
-    x = exp(x)
-    pos = x./sum(x)
-    return indmax(pos)
+                 X::Vector, class::Integer)
+    t = size(X,1)
+    c = -0.5 * (X - model.class_mean[:, class])' * pinv(model.class_cov) * (X- model.class_mean[:, class])
+    d = -0.5 * log(det(model.class_cov))
+    p = -t/2*log(2*pi)
+    pp = log(model.class_priors[class])
+    return c + d + p + pp
 end
 
 
-function test_naive()
+function test_GDA()
     X_train, X_test, y_train, y_test = make_cla()
     model = GDA()
     train!(model,X_train, y_train)

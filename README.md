@@ -14,7 +14,7 @@ lightML.jl is a collection of reimplementation of general machine learning algor
 - [x] Naive bayes
 - [x] Neural network
 - [x] Hidden Markov Model
-- [ ] Gaussian discriminant analysis
+- [x] Gaussian discriminant analysis
 - [ ] Gaussian mixture model
 - [ ] LOESS regression
 - [ ] Ridge regression

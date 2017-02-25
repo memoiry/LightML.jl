@@ -49,7 +49,6 @@ function scoring(model::Hmm)
     for i = 1:size(phi,2)
         phi[:,i] = normalize(phi[:, i])
     end 
-    @show phi[:,1:10]
     return phi
 end
 
@@ -82,7 +81,9 @@ function matching(mode::Hmm)
 end
 
 function learning(model::Hmm)
-    
+    #learning its parameters
+    #pi_, A, B
+    #given the obs
 end
 
 
@@ -142,7 +143,7 @@ model = Hmm(weatherObsMap, weatherObsIndex, weatherStateMap,
             weatherStateIndex, weatherprob,
             weather_trans, weather_obs, data)
 
-# phi = scoring(model)
+phi = scoring(model)
 
 matching_state = matching(model)
 

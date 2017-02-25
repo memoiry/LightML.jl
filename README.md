@@ -21,11 +21,11 @@ All algorithms are implemented in Julia.
 - [x] Neural network
 - [x] Hidden Markov Model
 - [x] Gaussian discriminant analysis
-- [ ] Gaussian mixture model
+- [x] Gaussian mixture model
 - [ ] LOESS regression
 - [ ] Ridge regression
 - [ ] Random Forests
-- [ ] PCA
+- [x] PCA
 - [ ] Factorization machines
 - [ ] Restricted Boltzmann machine
 - [ ] Gradient Boosting trees

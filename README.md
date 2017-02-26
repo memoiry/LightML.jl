@@ -14,6 +14,8 @@ All algorithms are implemented in Julia.
 - [x] Support vector machine(SVM)
 - [x] Linear regression
 - [x] Logistic regression
+- [x] LOESS regression
+- [x] Ridge regression
 - [x] spectral clustering
 - [x] K-Nearst neighbors
 - [x] K-Means 
@@ -22,13 +24,15 @@ All algorithms are implemented in Julia.
 - [x] Hidden Markov Model
 - [x] Gaussian discriminant analysis
 - [x] Gaussian mixture model
-- [ ] LOESS regression
-- [ ] Ridge regression
+- [ ] Decision tree
 - [ ] Random Forests
+- [ ] AdaBoost
+- [ ] Gradient Boosting trees
 - [x] PCA
+- [x] SVD
+- [ ] LDA
 - [ ] Factorization machines
 - [ ] Restricted Boltzmann machine
-- [ ] Gradient Boosting trees
 - [ ] t-Distributed Stochastic Neighbor Embedding
 
 ## API

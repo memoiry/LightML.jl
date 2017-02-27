@@ -83,6 +83,9 @@ function sigmoid_prime(x)
     return sigmoid(x).*(1-sigmoid(x))
 end
 
+
+## there is some problem need to be fixed
+
 function test_NeuralNetwork()
     X_train = [0.1 0.1; 0.1 0.9; 0.9 0.1; 0.9 0.9]
     y_train = [0.1,0.9,0.9,0.1]

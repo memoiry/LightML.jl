@@ -14,7 +14,7 @@ function train!(model::ModelName, X::Matrix, y::Vector)
 
 end
 
-function predict(mode::ModelName, 
+function predict(model::ModelName, 
                  x::Matrix)
     n = size(x,1)
     res = zeros(n)

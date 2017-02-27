@@ -150,6 +150,14 @@ function make_blo()
     return  X, y
 end
 
+function make_digits()
+    data = dat.load_digits()
+    X = data["data"]
+    y = data["target"]
+    X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=0.8,
+                                                         rand_seed=1111)
+    X_train, X_test, y_train, y_test
+end
 
 
 

@@ -14,7 +14,7 @@ All algorithms are implemented in Julia.
 - [x] Support vector machine(SVM)
 - [x] Linear regression
 - [x] Logistic regression
-- [x] LOESS regression
+- [x] Lasso regression
 - [x] Ridge regression
 - [x] spectral clustering
 - [x] K-Nearst neighbors
@@ -24,13 +24,13 @@ All algorithms are implemented in Julia.
 - [x] Hidden Markov Model
 - [x] Gaussian discriminant analysis
 - [x] Gaussian mixture model
-- [ ] Decision tree
+- [x] Decision tree
 - [ ] Random Forests
 - [ ] AdaBoost
 - [ ] Gradient Boosting trees
 - [x] PCA
 - [x] SVD
-- [ ] LDA
+- [x] LDA
 - [ ] Factorization machines
 - [ ] Restricted Boltzmann machine
 - [ ] t-Distributed Stochastic Neighbor Embedding
@@ -74,5 +74,17 @@ end
 ```
 
 ![](https:\/\/ooo.0o0.ooo\/2017\/02\/18\/58a8445e2114b.png)
+
+### LDA
+
+```julia
+function test_LDA()
+    X_train, X_test, y_train, y_test = make_cla()
+    model = LDA()
+    plot_in_2d(model, X_train, y_train)
+end
+```
+
+![](https:\/\/ooo.0o0.ooo\/2017\/03\/02\/58b82861bade3.png)
 
 

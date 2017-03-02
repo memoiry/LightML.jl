@@ -59,7 +59,13 @@ function unhot(predicted)
     actual = reduce(vcat,actual)
 end
 
-
+function normalize_(X::Matrix)
+    std_ = std(X, 1)
+    mean_ = mean(X, 1)
+    for i = 1:size(X,2)
+        X[:,i] = (X[:, i] - mean_[i])/std_[i]
+    end
+end
 function absolute_error(actual, predicted)
     return abs(actual - predicted)
 end

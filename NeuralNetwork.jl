@@ -96,8 +96,6 @@ function test_NeuralNetwork()
     model = NeuralNetwork(layers=[2,6,2,3,1])
     train!(model,X_train, y_train)
     predictions = predict(model,X_train)
-
-    #print("classification accuracy", accuracy(y_test, predictions))
 end
 
 

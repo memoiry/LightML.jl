@@ -6,28 +6,28 @@ typealias Arr Union{Vector, Matrix}
 type SVM
     X::Matrix
     y::Vector
-    C::Real 
-    tol::Real 
+    C::Float64 
+    tol::Float64 
     max_iter::Integer
-    kernel::AbstractString
+    kernel::String
     degree::Integer
-    gamma::Real
+    gamma::Float64
     alpha::Vector
-    b::Real
+    b::Float64
     sv_indx::Vector
     K::Matrix
 end
 
 function svm(X::Matrix,
              y::Vector;
-             C::Real = 1,
-             kernel::AbstractString = "linear",
+             C::Float64 = 1.0,
+             kernel::String = "linear",
              max_iter::Integer = 100,
-             tol::Real = 1e-3,
+             tol::Float64 = 1e-3,
              degree::Integer = 2,
-             gamma::Real = 0.1,
+             gamma::Float64 = 0.1,
              alpha::Vector = zeros(10),
-             b::Real = 0)
+             b::Float64 = 0.0)
     n = size(X,1)
     alpha = zeros(n)
     K = zeros(n,n)
@@ -150,12 +150,12 @@ end
 
 
 
-function svm_test()
+function test_svm()
     X, y = dat.make_classification(n_samples=1200, n_features=10, n_informative=5,
                                random_state=1111, n_classes=2, class_sep=1.75,)
     # Convert y to {-1, 1}
     y = (y * 2) - 1
-    X_train, X_test, y_train, y_test = make_cla
+    X_train, X_test, y_train, y_test = make_cla()
 
     for kernel in ["linear", "rbf"]
         model = svm(X_train, y_train, max_iter=500, kernel=kernel, C=0.6)

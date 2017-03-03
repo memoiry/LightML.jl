@@ -122,7 +122,7 @@ end
 
 function binary_crossentropy(actual, predicted)
     predicted = clamp(predicted, 1e-15, 1 - 1e-15)
-    return mean(-sum(actual .* log(predicted) +
+    return mean(-sum(actual .* log(predicted) -
                            (1 - actual) .* log(1 - predicted)))
 end
 

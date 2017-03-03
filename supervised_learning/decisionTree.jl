@@ -1,13 +1,13 @@
 include("utils/utils.jl")
 
-typealias features Union{AbstractString, Real}
+typealias features Union{String, Real}
 
 type DecisionNode
     label::features
     feature_index::Integer
     threshold::features
-    true_branch::Union{DecisionNode,AbstractString}
-    false_branch::Union{DecisionNode, AbstractString}
+    true_branch::Union{DecisionNode,String}
+    false_branch::Union{DecisionNode, String}
 end
 
 function DecisionNode(;
@@ -20,11 +20,11 @@ function DecisionNode(;
 end
 
 type DecisionTree
-    root::Union{DecisionNode,AbstractString}
-    max_depth::Real
-    min_gain::Real 
+    root::Union{DecisionNode,String}
+    max_depth::Integer 
+    min_gain::Float64 
     min_samples_split::Integer
-    current_depth::Real
+    current_depth::Integer
 end
 
 function DecisionTree(;
@@ -118,7 +118,7 @@ function predict(model::DecisionNode,
         return model.label
     end
     feature_current = x[model.feature_index] 
-    if typeof(feature_current) <:AbstractString
+    if typeof(feature_current) <:String
         if feature_current == model.threshold
             return predict(model.true_branch, x)
         else
@@ -151,7 +151,7 @@ function split_at_feature(X, feature_i, threshold)
     if typeof(threshold) <: Real
         ind1 = find(X[:,feature_i] .<= threshold)
         ind2 = find(X[:,feature_i] .> threshold)
-    elseif typeof(threshhold) <: AbstractString
+    elseif typeof(threshhold) <: String
         ind1 = find(X[:,feature_i] .== threshold)
         ind2 = find(X[:,feature_i] .!= threshold)
     end

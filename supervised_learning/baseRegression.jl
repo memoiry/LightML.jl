@@ -5,7 +5,7 @@ abstract BaseRegression
 
 type LinearRegression <: BaseRegression
     C::Float64
-    reg::AbstractString
+    reg::String
     lr::Float64
     tolerance::Float64
     max_iters::Integer
@@ -15,7 +15,7 @@ end
 
 type LogisticRegression <: BaseRegression
     C::Float64
-    reg::AbstractString
+    reg::String
     lr::Float64
     tolerance::Float64
     max_iters::Integer
@@ -79,7 +79,7 @@ function train!(model1::LinearRegression,
     while errors_norm > model.tolerance && iter_count < model.max_iters
         model.params -= model.C*cost_d(model.params)
         errors_norm = cost_linear(model.params)
-        println("current MSE is $(errors_norm)")
+        println("Epoch: $(iter_count): current MSE is $(errors_norm)")
         iter_count = iter_count + 1
     end
 end
@@ -103,25 +103,36 @@ function train!(model1::LogisticRegression,
     while errors_norm > model.tolerance && iter_count < model.max_iters
         model.params -= model.C*cost_d(model.params)
         errors_norm = cost_linear(model.params)
-        println("current MSE is $(errors_norm)")
+        println("Epoch: $(iter_count): current MSE is $(errors_norm)")
         iter_count = iter_count + 1
     end
 end
 
 
-function predict(model::LinearRegression,
+function predict!(model::LogisticRegression,
+                 x)
+    n = size(x,1)
+    b = ones(n)
+    res = sigmoid(hcat(x,b)*model.params)
+    n_ = size(res,1)
+    for i = 1:n_
+        if res[i] >= 0.5
+            res[i] = 1
+        else
+            res[i] = 0
+        end
+    end
+    return res
+end
+
+function predict!(model::LinearRegression ,
                  x)
     n = size(x,1)
     b = ones(n)
     return hcat(x,b)*model.params
 end
 
-function predict(model::LogisticRegression,
-                 x)
-    n = size(x,1)
-    b = ones(n)
-    return hcat(x,b)*model.params
-end
+
 
 function cost_linear(w::Vector)
     return add_reg(mean_squared_error(y_global, X_global*w),w)
@@ -147,7 +158,7 @@ function regression_test()
 
     model = LinearRegression(lr=0.01, max_iters=200, reg="l1", C=0.03)
     train!(model,X_train, y_train)
-    predictions = predict(model,X_test)
+    predictions = predict!(model,X_test)
     print("regression msea", mean_squared_error(y_test, predictions))
 
 end
@@ -162,7 +173,7 @@ function classification_test()
 
     model = LogisticRegression(lr=0.01, max_iters=100, reg="l2", C=0.01)
     train!(model,X_train, y_train)
-    predictions = predict(model,X_test)
+    predictions = predict!(model,X_test)
     print("classification accuracy", accuracy(y_test, predictions))
 
 end

@@ -29,23 +29,23 @@ using DataFrames
 
 
 type Kmeans
-    clusters::Dict{Any,Matrix}
-    clu_ind::Dict{Any,Vector}
+    clusters::Dict{Integer,Matrix}
+    clu_ind::Dict{Integer,Vector}
     k::Integer
     X::Matrix
     max_iter::Integer
     centroid::Matrix
-    init::AbstractString
+    init::String
 end
 
 function Kmeans(;
-                clusters::Dict{Any,Matrix} = Dict{Any,Matrix}(),
+                clusters::Dict{Integer,Matrix} = Dict{Integer,Matrix}(),
                 k::Integer = 2,
                 X::Matrix = zeros(2,2),
                 max_iter::Integer = 150,
                 centroid::Matrix = zeros(2,2),
-                init::AbstractString = "++",
-                clu_ind::Dict{Any,Vector} = Dict{Any,Vector}())
+                init::String = "++",
+                clu_ind::Dict{Integer,Vector} = Dict{Integer,Vector}())
 
     return Kmeans(clusters, clu_ind, k, X, max_iter, centroid , init)
 end
@@ -79,8 +79,8 @@ end
 
 function assign_clusters!(model::Kmeans)
     n = size(model.X,1)
-    model.clusters = Dict{Any,Matrix}()
-    model.clu_ind = Dict{Any,Vector}()
+    model.clusters = Dict{Integer,Matrix}()
+    model.clu_ind = Dict{Integer,Vector}()
     for i = 1:n 
         dist = zeros(model.k)
         for j = 1:length(dist)

@@ -10,11 +10,11 @@ type GDA
 end
 
 function GDA(;
-                    class_mean=zeros(2,2),
-                    class_cov=zeros(2,2),
-                    class_priors=zeros(2),
-                    n_class = 2,
-                    class_ = zeros(2))
+            class_mean=zeros(2,2),
+            class_cov=zeros(2,2),
+            class_priors=zeros(2),
+            n_class = 2,
+            class_ = zeros(2))
     return GDA(n_class, class_mean, class_cov, class_priors,class_)
 end
     
@@ -69,7 +69,7 @@ function log_pdf(model::GDA,
     return c + d + p + pp
 end
 
-
+# therer is some problem to be fixed
 function test_GDA()
     X_train, X_test, y_train, y_test = make_cla()
     model = GDA()

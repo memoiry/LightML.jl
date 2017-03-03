@@ -2,10 +2,10 @@ include("utils/utils.jl")
 
 
 type Hmm
-    e_to_i::Dict{AbstractString, Integer}
-    i_to_e::Dict{Integer, AbstractString}
-    s_to_i::Dict{AbstractString, Integer}
-    i_to_s::Dict{Integer, AbstractString}
+    e_to_i::Dict{String, Integer}
+    i_to_e::Dict{Integer, String}
+    s_to_i::Dict{String, Integer}
+    i_to_s::Dict{Integer, String}
     pi_::Vector
     A::Matrix
     B::Matrix
@@ -115,7 +115,9 @@ function test_Hmm()
     print("classification accuracy", accuracy(y_test, predictions))
 end
 
-
+####################################
+## there is some problem to be fixed
+####################################
 
 # state map
 weatherStateMap = Dict([("sunny", 1), ("rainy", 2), ("foggy", 3)])

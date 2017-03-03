@@ -1,15 +1,17 @@
 include("utils/utils.jl")
 
+using Gadfly
+using DataFrames
 
 type PCA
-    solver::AbstractString
+    solver::String
     n_components::Integer
     components::Matrix
     mean_::Vector
 end
 
 function PCA(;
-             solver::AbstractString = "eig",
+             solver::String = "svd",
              n_components::Integer = 2,
              components::Matrix = zeros(4,4),
              mean_::Vector = zeros(4))
@@ -28,7 +30,7 @@ function train!(model::PCA, X::Matrix)
         cov_ = cov(X_de_mean)
         D,V = eigs(cov_, nev = model.n_components)
     end
-    model.components = V
+    model.components = V[:, 1:2]
 end
 
 function transform(model::PCA, 
@@ -48,6 +50,13 @@ function transform(model::PCA,
     return x
 end
 
+function plot_(X::Matrix, y::Vector)
+    println("computing finished, ploting....")
+    x1 = X[:, 1]
+    x2 = X[:, 2]
+    df = DataFrame(x = x1, y = x2, clu = y)
+    plot(df, x = "x", y = "y", color = "clu", Geom.point)
+end
 
 
 function test_PCA()
@@ -55,6 +64,7 @@ function test_PCA()
     model = PCA()
     train!(model,X_train)
     X_reduced = transform(model, X_train)
+    plot_(X_reduced, y_train)
 end
 
 

@@ -5,7 +5,7 @@ using DataFrames
 
 type LDA
     n_components::Integer
-    method::AbstractString
+    method::String
 end
 
 function LDA(;

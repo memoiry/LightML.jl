@@ -5,11 +5,11 @@ using Distributions
 type GaussianMixture
     K::Integer
     max_iters::Integer
-    method::AbstractString
-    tolerance::Real
+    method::String
+    tolerance::Float64
     weights::Vector
     means::Matrix
-    cov_::Dict{Any,Matrix}
+    cov_::Dict{Integer,Matrix}
     responsibilities::Matrix
     likelihood::Vector
 end
@@ -17,11 +17,11 @@ end
 function GaussianMixture(; 
                          K::Integer = 4,
                          max_iters::Integer = 500,
-                         tolerance::Real = 1e-3,
-                         method::AbstractString = "random",
+                         tolerance::Float64 = 1e-3,
+                         method::String = "random",
                          weights::Vector = zeros(4),
                          means::Matrix = zeros(4,4),
-                         cov_::Dict{Any,Matrix} = Dict{Any,Matrix}(),
+                         cov_::Dict{Integer,Matrix} = Dict{Integer,Matrix}(),
                          likelihood::Vector = zeros(4),
                          responsibilities::Matrix = zeros(4,4))
     return GaussianMixture(K, max_iters, method,
@@ -54,7 +54,6 @@ end
 function E_step!(model, X)
     likelihood = zeros(size(X,1),model.K)
     for i = 1:model.K
-        @show model.cov_[i]
         model.cov_[i] = Symmetric(model.cov_[i],:L)
         dis = MvNormal(model.means[:,i], model.cov_[i])
         likeli = pdf(dis, X')
@@ -63,7 +62,6 @@ function E_step!(model, X)
     weighted_likelihood = repmat(model.weights',size(X,1),1) .* likelihood
     temp1 = sum(log(sum(weighted_likelihood,2)))
     push!(model.likelihood, temp1)
-    @show model.likelihood
     for i = 1:size(weighted_likelihood, 1)
         weighted_likelihood[i,:] = weighted_likelihood[i,:] / sum(weighted_likelihood[i,:])
     end
@@ -80,7 +78,6 @@ function M_step!(model, X)
         model.weights[i] = sum(resp)/n_sample
         for j = 1:n_feature
             temp =  resp * X[:,j]/sum(resp)
-            @show temp
             model.means[j, i] =  temp[1]
         end
         cov_ = 0
@@ -99,7 +96,7 @@ function isconverge_(model::GaussianMixture)
     end
     return false
 end
-function predict(mode::GaussianMixture, 
+function predict(model::GaussianMixture, 
                  x::Matrix)
     n = size(x,1)
     res = zeros(n)
@@ -111,12 +108,14 @@ end
 
 function predict(model::GaussianMixture,
                  x::Vector)
+    likelihood = zeros(model.K)
     for i = 1:model.K
+        model.cov_[i] = Symmetric(model.cov_[i],:L)
         dis = MvNormal(model.means[:,i], model.cov_[i])
-        likeli = pdf(dis, X')
-        likelihood[:, i] = likeli
+        likeli = pdf(dis, x)
+        likelihood[i] = likeli
     end
-    weighted_likelihood = repmat(model.weights',size(X,1),1) .* likelihood
+    weighted_likelihood = model.weights .* likelihood
     return indmax(weighted_likelihood)
 end
 

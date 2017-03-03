@@ -3,15 +3,15 @@ include("utils/utils.jl")
 
 type NeuralNetwork
     layers::Vector
-    act::AbstractString
-    weights::Dict{Any, Matrix}
+    act::String
+    weights::Dict{Integer, Matrix}
     max_iter::Integer
 end
 
 function NeuralNetwork(;
                        layers::Vector = [2,2,1],
-                       act::AbstractString = "sigmoid",
-                       weights::Dict{Any,Matrix} = Dict{Any,Matrix}(),
+                       act::String = "sigmoid",
+                       weights::Dict{Integer,Matrix} = Dict{Any,Matrix}(),
                        max_iter::Integer = 500000)
     return NeuralNetwork(layers, act, weights, max_iter)
 end
@@ -19,8 +19,8 @@ end
 function train!(model::NeuralNetwork, X::Matrix, y::Vector)
     init_weights(model)
     depth = size(model.layers,1)
-    a::Dict{Any, Vector} = Dict()
-    z::Dict{Any, Vector} = Dict()
+    a::Dict{Integer, Vector} = Dict()
+    z::Dict{Integer, Vector} = Dict()
     X = hcat(X,ones(size(X,1)))
     @show depth
 
@@ -31,7 +31,7 @@ function train!(model::NeuralNetwork, X::Matrix, y::Vector)
             z[j] = vec(a[j-1]' * model.weights[j-1])
             a[j] = vec(sigmoid(z[j]))
         end
-        delta = Dict{Any, Vector}()
+        delta = Dict{Integer, Vector}()
         error_ = a[depth] - y[r]
         if i % 1000 == 0
             println("$(i) epochs: error $(error_)")

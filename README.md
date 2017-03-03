@@ -1,12 +1,16 @@
 # lightML.jl
 
 
-lightML.jl is a collection of reimplementation of general machine learning algorithm in Julia. I will update it for learning purpose.
+lightML.jl is a collection of reimplementation of general machine learning algorithm in Julia. 
+
+The purpose of this project is purely self-educational.
 
 # Why?
 
 This project is targeting people who want to learn internals of ml algorithms or implement them from scratch.
+
 The code is much easier to follow than the optimized libraries and easier to play with.
+
 All algorithms are implemented in Julia.
 
 ## To-do List

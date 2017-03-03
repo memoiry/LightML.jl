@@ -42,7 +42,7 @@ All algorithms are implemented in Julia.
 - [x] SVD
 - [x] Gaussian mixture model
 - [ ] Apriori
-- [ ]Partitioning Around Medoids
+- [ ] Partitioning Around Medoids
 
 
 ## API

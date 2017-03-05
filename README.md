@@ -30,7 +30,7 @@ All algorithms are implemented in Julia.
 - [x] Decision tree
 - [x] LDA
 - [x] Label propagation
-- [ ] Multi-class LDA
+- [x] Multi-class LDA
 - [ ] Random Forests
 - [ ] AdaBoost
 - [ ] Gradient Boosting trees
@@ -54,7 +54,7 @@ All algorithms are implemented in Julia.
 ### SVM example
 
 ```julia
-function test_test()
+function test_svm()
     X, y = dat.make_classification(n_samples=1200, n_features=10, n_informative=5,
                                random_state=1111, n_classes=2, class_sep=1.75,)
     # Convert y to {-1, 1}

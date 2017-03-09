@@ -15,7 +15,10 @@ All algorithms are implemented in Julia.
 
 # Installation
 
+```julia
 Pkg.clone("https://github.com/memoiry/lightML.jl")
+```
+
 
 # Usage
 

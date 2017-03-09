@@ -1,4 +1,3 @@
-include("utils/utils.jl")
 
 import StatsBase: countmap
 
@@ -89,7 +88,7 @@ function dist(x::Vector, y::Vector, dist_func::Euclidean)
 end
 
 
-function regression_test()
+function test_kneast_regression()
     # Generate a random regression problem
     X_train, X_test, y_train, y_test = make_reg()
 
@@ -99,7 +98,7 @@ function regression_test()
     print("regression msea", mean_squared_error(y_test, predictions))
 end
 
-function classification_test()
+function test_kneast_classification()
     X_train, X_test, y_train, y_test = make_cla()
     model = KnnClassifier()
     train!(model,X_train, y_train)

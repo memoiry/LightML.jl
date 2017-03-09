@@ -1,6 +1,4 @@
-include("utils/utils.jl")
 
-using Distributions
 
 type GaussianMixture
     K::Integer

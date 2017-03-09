@@ -1,9 +1,3 @@
-module labelPropagation
-
-export label_propagation, loadCircleData, show_example
-using Gadfly
-using DataFrames
-
 
 function show_example(Mat_Label, labels, Mat_Unlabel, unlabel_data_labels)      
     mat = vcat(Mat_Label, Mat_Unlabel)
@@ -241,4 +235,19 @@ function label_propagation(affinity_matrix, labels; kernel_type = "rbf", rbf_sig
     end
     return unlabel_data_labels
   end
+
+
+function test_label_propagation()
+  num_unlabel_samples = 800  
+  Mat_Label, labels, Mat_Unlabel = loadCircleData(num_unlabel_samples) 
+  iter = round(linspace(1,70,5))
+  res = []
+  for i in iter
+      unlabel_data_labels = label_propagation(Mat_Label, Mat_Unlabel, labels, kernel_type = "knn", knn_num_neighbors = 10, max_iter = i)
+      push!(res, unlabel_data_labels)
+  end
+  res = reduce(hcat, res)
+  show_example(Mat_Label, labels, Mat_Unlabel, res)  
 end
+
+

@@ -1,6 +1,4 @@
 
-include("utils/utils.jl")
-
 typealias Arr Union{Vector, Matrix} 
 
 type SVM
@@ -50,7 +48,7 @@ function predict(model::SVM,
 end
 
 
-function train(model::SVM)
+function train!(model::SVM)
     n_sample = size(model.X,1)
     model.K = zeros(n_sample,n_sample)
     for i in 1:n_sample
@@ -159,7 +157,7 @@ function test_svm()
 
     for kernel in ["linear", "rbf"]
         model = svm(X_train, y_train, max_iter=500, kernel=kernel, C=0.6)
-        train(model)
+        train!(model)
         predictions = predict(model,X_test)
         println("Classification accuracy $(kernel): $(accuracy(y_test, predictions))")
     end

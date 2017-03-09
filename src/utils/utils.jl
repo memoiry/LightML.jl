@@ -1,7 +1,4 @@
-using ForwardDiff
-using PyCall
 
-@pyimport sklearn.datasets as dat
 
 
 function one_hot(y)
@@ -9,6 +6,13 @@ function one_hot(y)
     return eye(n+1)[y,]
 end
 
+
+function calc_variance(X)
+    n_sample = size(x,1)
+    mean_ = repmat(mean(X, 1),n_sample,1)
+    de_mean = X - mean_ 
+    return 1/n_sample * diag(de_mean' * de_mean)
+end
 
 function train_test_split(X,y;train_size=0.75,rand_seed=2135)
     srand(rand_seed)
@@ -19,6 +23,18 @@ function train_test_split(X,y;train_size=0.75,rand_seed=2135)
     y_train = y[rand_indx[1:train_num]]
     y_test = y[rand_indx[(train_num+1):end]]
     return  X_train, X_test, y_train, y_test
+end
+
+function calc_entropy(y)
+    feature_unique = unique(y)
+    num_sample = length(y)
+    entro = 0
+    for i in feature_unique
+        num_feature = sum(y .== i)
+        p = num_feature / num_sample
+        entro += - p * log2(p)
+    end
+    return entro 
 end
 
 
@@ -127,9 +143,19 @@ function binary_crossentropy(actual, predicted)
 end
 
 
-function sigmoid(x)
+function sigmoid_tanh(x)
     return 0.5 * (tanh(x) + 1)
 end
+
+
+function sigmoid(x)
+    return 1./(1+exp(-x))
+end
+
+function sigmoid_prime(x)
+    return sigmoid(x).*(1-sigmoid(x))
+end
+
 
 function make_cla()
     X, y = dat.make_classification(n_samples=1200, n_features=10, n_informative=5,

@@ -1,4 +1,3 @@
-include("utils/utils.jl")
 
 
 type NaiveBayes 

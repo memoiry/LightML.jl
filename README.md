@@ -13,6 +13,49 @@ The code is much easier to follow than the optimized libraries and easier to pla
 
 All algorithms are implemented in Julia.
 
+# Installation
+
+Pkg.clone("https://github.com/memoiry/lightML.jl")
+
+# Usage
+
+I have written an example for every implementation. For example,  you could just write test_svm() for testing SVM or test_label_propagtion() for testing label propagation.
+
+### API available 
+
+- test_decision_tree()
+- test_label_propagation()
+- test_LDA()
+- test_naive()
+- test_NeuralNetwork()
+- test_svm()
+- test_kmeans_random()
+- test_PCA()
+- test_spec_cluster()
+- test_classification()
+- test_regression()
+- test_kneast_regression()
+- test_kneast_classification()
+- test_GaussianMixture() **(Fixing)**
+- test_GDA() **(Fixing)**
+- test_HMM() **(Fixing)**
+
+#### SVM
+
+```julia
+using LightML
+
+test_svm()
+```
+
+#### Label propagation
+
+```julia
+using LightML
+
+test_label_propagation()
+```
+
 ## To-do List
 
 ### Supervised Learning
@@ -49,7 +92,7 @@ All algorithms are implemented in Julia.
 - [ ] Partitioning Around Medoids
 
 
-## API
+## Example
 
 ### SVM example
 

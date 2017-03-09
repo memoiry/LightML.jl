@@ -1,7 +1,5 @@
-include("utils/utils.jl")
 
-using Gadfly
-using DataFrames
+
 
 type PCA
     solver::String

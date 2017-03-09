@@ -1,8 +1,4 @@
-include("Kmeans.jl")
 
-
-using Gadfly
-using DataFrames    
 
 
 function spec_clustering(data,k)

@@ -1,4 +1,3 @@
-include("utils/utils.jl")
 
 
 type Hmm
@@ -119,35 +118,38 @@ end
 ## there is some problem to be fixed
 ####################################
 
-# state map
-weatherStateMap = Dict([("sunny", 1), ("rainy", 2), ("foggy", 3)])
-weatherStateIndex = Dict([(1, "sunny"), (2, "rainy"), (3, "foggy")])
+function test_HMM()
+    # state map
+    weatherStateMap = Dict([("sunny", 1), ("rainy", 2), ("foggy", 3)])
+    weatherStateIndex = Dict([(1, "sunny"), (2, "rainy"), (3, "foggy")])
 
-# observation map
-weatherObsMap = Dict([("no", 1), ("yes", 2)])
-weatherObsIndex = Dict([(1, "no"), (2, "yes")])
+    # observation map
+    weatherObsMap = Dict([("no", 1), ("yes", 2)])
+    weatherObsIndex = Dict([(1, "no"), (2, "yes")])
 
-# prior prob
-weatherprob = [0.5,0.25,0.25]
+    # prior prob
+    weatherprob = [0.5,0.25,0.25]
 
-# trasition probabilities
+    # trasition probabilities
 
-weather_trans = [0.8 0.05 0.15;
-                 0.2 0.6 0.2;
-                 0.2 0.3 0.5]
+    weather_trans = [0.8 0.05 0.15;
+                     0.2 0.6 0.2;
+                     0.2 0.3 0.5]
 
-# obs 
+    # obs 
 
-weather_obs = [0.9 0.1 ;0.2 0.8 ;0.7 0.3]
+    weather_obs = [0.9 0.1 ;0.2 0.8 ;0.7 0.3]
 
-data = load_data("data/weather-test1-1000.txt")
-model = Hmm(weatherObsMap, weatherObsIndex, weatherStateMap, 
-            weatherStateIndex, weatherprob,
-            weather_trans, weather_obs, data)
+    data = load_data("data/weather-test1-1000.txt")
+    model = Hmm(weatherObsMap, weatherObsIndex, weatherStateMap, 
+                weatherStateIndex, weatherprob,
+                weather_trans, weather_obs, data)
 
-phi = scoring(model)
+    phi = scoring(model)
 
-matching_state = matching(model)
+    matching_state = matching(model)
+end
+
 
 
 

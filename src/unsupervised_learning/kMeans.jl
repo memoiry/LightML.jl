@@ -1,7 +1,4 @@
-include("utils/utils.jl")
 
-using Gadfly
-using DataFrames    
 #Partition a dataset into K clusters.
 
 #Finds clusters by repeatedly assigning each data point to the cluster with

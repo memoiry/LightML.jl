@@ -1,4 +1,3 @@
-include("utils/utils.jl")
 
 abstract BaseRegression
 
@@ -109,7 +108,7 @@ function train!(model1::LogisticRegression,
 end
 
 
-function predict!(model::LogisticRegression,
+function predict(model::LogisticRegression,
                  x)
     n = size(x,1)
     b = ones(n)
@@ -125,7 +124,7 @@ function predict!(model::LogisticRegression,
     return res
 end
 
-function predict!(model::LinearRegression ,
+function predict(model::LinearRegression ,
                  x)
     n = size(x,1)
     b = ones(n)
@@ -152,18 +151,18 @@ function add_reg(loss,w)
 end
 
 
-function regression_test()
+function test_regression()
     # Generate a random regression problem
     X_train, X_test, y_train, y_test = make_reg()
 
     model = LinearRegression(lr=0.01, max_iters=200, reg="l1", C=0.03)
     train!(model,X_train, y_train)
-    predictions = predict!(model,X_test)
+    predictions = predict(model,X_test)
     print("regression msea", mean_squared_error(y_test, predictions))
 
 end
 
-function classification_test()
+function test_classification()
     # Generate a random binary classification problem.
     X, y = dat.make_classification(n_samples=1000, n_features=100,
                                n_informative=75, random_state=1111,
@@ -173,7 +172,7 @@ function classification_test()
 
     model = LogisticRegression(lr=0.01, max_iters=100, reg="l2", C=0.01)
     train!(model,X_train, y_train)
-    predictions = predict!(model,X_test)
+    predictions = predict(model,X_test)
     print("classification accuracy", accuracy(y_test, predictions))
 
 end

@@ -1,10 +1,11 @@
 # LightML.jl
 
+### About
 LightML.jl is a collection of reimplementation of general machine learning algorithm in Julia. 
 
 The purpose of this project is purely self-educational.
 
-# Why?
+### Why?
 
 This project is targeting people who want to learn internals of ml algorithms or implement them from scratch.
 
@@ -14,51 +15,51 @@ All algorithms are implemented in Julia.
 
 You should access test function of every implementation for its usage in detail. Every model is actually constructed in a similar manner.
 
-## To-do List
-
-### Supervised Learning
-
-- [x] Support vector machine
-- [x] Linear regression
-- [x] Logistic regression
-- [x] Lasso regression
-- [x] Ridge regression
-- [x] K-Nearst neighbors
-- [x] Naive bayes
-- [x] Neural network
-- [x] Hidden Markov Model
-- [x] Gaussian discriminant analysis
-- [x] Decision tree
-- [x] LDA
-- [x] Label propagation
-- [x] Multi-class LDA
-- [x] AdaBoost
-- [x] Gradient Boosting trees
-- [ ] Random Forests
-
-### Unsupervised Learning:
-
-- [x] K-Means 
-- [x] spectral clustering
-- [x] PCA
-- [x] SVD
-- [x] Gaussian mixture model
-- [ ] Apriori
-- [ ] Partitioning Around Medoids
-
-
-# Installation
+### Installation
 
 ```julia
 Pkg.clone("https://github.com/memoiry/LightML.jl")
 ```
 
+### Running Implementations
 
-# Usage
+```julia
+using LightML
+test_label_propagation()
+```
 
-I have written an example for every implementation. For example,  you could just write test_svm() for testing SVM or test_label_propagtion() for testing label propagation. 
+![](https:\/\/ooo.0o0.ooo\/2017\/02\/06\/58975f6f57770.png)
 
-### API available 
+
+
+## Current Implementations
+
+#### Supervised Learning:
+- [Adaboost](src/supervised_learning/adaboost.jl)
+- [Decision Tree](src/supervised_learning/decisionTree.jl)
+- [Gradient Boosting](src/supervised_learning/GradientBoostingTree.jl)
+- [K Nearest Neighbors](src/supervised_learning/kNearestNeighbors.jl)
+- [Linear Discriminant Analysis](src/supervised_learning/linearDiscriminantAnalysis.jl)
+- [Linear Regression](src/supervised_learning/baseRegression.jl)
+- [Logistic Regression](src/supervised_learning/baseRegression.jl)
+- [Multilayer Perceptron](src/supervised_learning/neuralNetwork_bp.jl)
+- [Naive Bayes](src/supervised_learning/naivdBayes.jl)
+- [Ridge Regression](src/supervised_learning/baseRegression.jl)
+- [Lasso Regression](src/supervised_learning/baseRegression.jl)
+- [Support Vector Machine](src/supervised_learning/support_vector_machine.jl)
+- [Hidden Markov Model](src/supervised_learning/hiddenMarkovModel.jl)
+- [Label propagation](src/supervised_learning/labelPropagation.jl)
+- [ ] Random Forests	
+- [ ] XGBoost
+
+#### Unsupervised Learning:
+
+- [Gaussian Mixture Model](src/unsupervised_learning/gaussianMixtureModel.jl)
+- [K-Means](src/unsupervised_learning/kMeans.jl)
+- [Principal Component Analysis](src/unsupervised_learning/principalComponentAnalysis.jl)
+- [ ] Apriori
+
+#### Test Example available 
 
 - test_ClassificationTree()
 - test_RegressionTree()
@@ -155,27 +156,6 @@ end
 
 ![](https:\/\/ooo.0o0.ooo\/2017\/03\/03\/58b8c8ddc195b.png)
 
-### Label propagation
 
-For label propagation you could just do as follow.
-
-For more detail you can just access [Labelpropagation.jl](https://github.com/memoiry/labelPropagation.jl).
-
-```julia
-Pkg.clone("https://github.com/memoiry/labelPropagation.jl")
-using labelPropagation
-num_unlabel_samples = 800  
-Mat_Label, labels, Mat_Unlabel = loadCircleData(num_unlabel_samples) 
-iter = round(linspace(1,70,5))
-res = []
-for i in iter
-    unlabel_data_labels = label_propagation(Mat_Label, Mat_Unlabel, labels, kernel_type = "knn", knn_num_neighbors = 10, max_iter = i)
-    push!(res, unlabel_data_labels)
-end
-res = reduce(hcat, res)
-show_example(Mat_Label, labels, Mat_Unlabel, res)  
-```
-
-![](https:\/\/ooo.0o0.ooo\/2017\/02\/06\/58975f6f57770.png)
 
 

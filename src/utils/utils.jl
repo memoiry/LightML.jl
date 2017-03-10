@@ -8,7 +8,7 @@ end
 
 
 function calc_variance(X)
-    n_sample = size(x,1)
+    n_sample = size(X,1)
     mean_ = repmat(mean(X, 1),n_sample,1)
     de_mean = X - mean_ 
     return 1/n_sample * diag(de_mean' * de_mean)
@@ -81,6 +81,7 @@ function normalize_(X::Matrix)
     for i = 1:size(X,2)
         X[:,i] = (X[:, i] - mean_[i])/std_[i]
     end
+    return X
 end
 function absolute_error(actual, predicted)
     return abs(actual - predicted)
@@ -157,8 +158,8 @@ function sigmoid_prime(x)
 end
 
 
-function make_cla()
-    X, y = dat.make_classification(n_samples=1200, n_features=10, n_informative=5,
+function make_cla(;n_samples = 1200, n_features = 10)
+    X, y = dat.make_classification(n_samples=n_samples, n_features=n_features,
                                random_state=1111, n_classes=2, class_sep=1.75,)
     # Convert y to {-1, 1}
     y = (y * 2) - 1
@@ -167,9 +168,9 @@ function make_cla()
     X_train, X_test, y_train, y_test
 end
 
-function make_reg()
-    X, y = dat.make_regression(n_samples=10000, n_features=100,
-                           n_informative=75, n_targets=1, noise=0.05,
+function make_reg(;n_samples = 200,
+                   n_features = 10)
+    X, y = dat.make_regression(n_samples=n_samples, n_features=n_features, n_targets=1, noise=0.05,
                            random_state=1111, bias=0.5)
     X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=0.8,
                                                         rand_seed=1111)

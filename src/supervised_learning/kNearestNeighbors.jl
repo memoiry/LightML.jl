@@ -32,6 +32,15 @@ function KnnClassifier(;
     return KnnClassifier(k,dist_func,X,y)
 end
 
+function KnnRegression(;
+                       k::Integer = 5,
+                       dist_func::Dist = Euclidean(),
+                       X::Matrix = zeros(2,2),
+                       y::Vector = zeros(2))
+    return KnnClassifier(k,dist_func,X,y)
+end
+
+
 
 function train!(model::KnnClassifier, X::Matrix, y::Vector)
     model.X = X
@@ -89,13 +98,16 @@ end
 
 
 function test_kneast_regression()
-    # Generate a random regression problem
-    X_train, X_test, y_train, y_test = make_reg()
+
+    X_train, X_test, y_train, y_test = make_reg(n_features = 1)
 
     model = KnnRegression()
     train!(model,X_train, y_train)
     predictions = predict(model,X_test)
     print("regression msea", mean_squared_error(y_test, predictions))
+    PyPlot.scatter(X_test, y_test, color = "black")
+    PyPlot.scatter(X_test, predictions, color = "green")
+    legend(loc="upper right",fancybox="true")
 end
 
 function test_kneast_classification()

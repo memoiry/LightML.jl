@@ -1,10 +1,9 @@
 
-typealias features Union{String, Real}
 
 type DecisionNode
-    label::features
+    label::Features
     feature_index::Integer
-    threshold::features
+    threshold::Features
     true_branch::Union{DecisionNode,String}
     false_branch::Union{DecisionNode, String}
 end
@@ -60,31 +59,44 @@ end
 
 function train!(model::DecisionTree, X::Matrix, y::Vector)
     model.current_depth = 0
+    #Normalize
+    #X_y = [X y]
+    #X_y = normalize_(X_y)
+    #X = X_y[:, 1:(end-1)]
+    #y = X_y[:, end]
     model.root = build_tree(model, X, y)
 end
 
 
 function build_tree(model::DecisionTree, X::Matrix, y::Vector)
+
     entropy = calc_entropy(y)
     largest_impurity = 0
     best_criteria = 0
     best_sets = 0
 
     X_y = hcat(X, y)
-
     n_samples, n_features = size(X_y)
     n_features = n_features - 1
     if n_samples >= model.min_samples_split
         for i = 1:n_features
             feature_values = X_y[:, i]
             unique_values = unique(feature_values)
+            #For large regression problem
+            #if typeof(model) == RegressionTree
+            #    num = 8
+            #    if length(unique_values) >= num
+            #        num_ = length(unique_values)
+            #        indd = randperm(num_)[1:num]
+            #        unique_values = unique_values[indd]
+            #    end
+            #end
             for threshold in unique_values
                 Xy_1, Xy_2 = split_at_feature(X_y, i, threshold)
                 if size(Xy_1,1) > 0 && size(Xy_2,1) > 0
                     y1 = Xy_1[:, end]
                     y2 = Xy_2[:, end]
-                    impurity = impurity_calc(model, y, y1, y2)
-                    @show impurity
+                    impurity = impurity_calc(model, y, y1, y2)[1]
                     if impurity > largest_impurity
                         largest_impurity = impurity
                         best_criteria = Dict("feature_i" => i, "threshold" => threshold)
@@ -94,8 +106,6 @@ function build_tree(model::DecisionTree, X::Matrix, y::Vector)
             end
         end
     end
-
-
     if model.current_depth < model.max_depth && largest_impurity > model.min_gain
         leftX, leftY = best_sets["left_branch"][:, 1:(end-1)], best_sets["left_branch"][:, end]
         rightX, rightY = best_sets["right_branch"][:, 1:(end-1)], best_sets["right_branch"][:, end]
@@ -135,9 +145,9 @@ end
 
 
 function impurity_calc(model::RegressionTree, y, y1, y2)
-    var_total = calc_variance(y)
-    var_y1 = calc_variance(y1)
-    var_y2 = calc_variance(y2)
+    var_total = var(y)
+    var_y1 = var(y1)
+    var_y2 = var(y2)
     frac_1 = length(y1) / length(y)
     frac_2 = length(y2) / length(y)
 
@@ -213,13 +223,26 @@ end
 
 ## seems there is some problem...
 
-function test_decision_tree()
+function test_ClassificationTree()
     X_train, X_test, y_train, y_test = make_cla()
     model = ClassificationTree()
     train!(model,X_train, y_train)
     predictions = predict(model,X_test)
     print("classification accuracy", accuracy(y_test, predictions))
 end
+
+
+function test_RegressionTree()
+    X_train, X_test, y_train, y_test = make_reg(n_features = 1)
+    model = RegressionTree()
+    train!(model,X_train, y_train)
+    predictions = predict(model,X_test)
+    print("regression msea", mean_squared_error(y_test, predictions))
+    PyPlot.scatter(X_test, y_test, color = "black")
+    PyPlot.scatter(X_test, predictions, color = "green")
+    legend(loc="upper right",fancybox="true")
+end
+
 
 
 

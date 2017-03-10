@@ -135,7 +135,7 @@ end
 
 
 
-function plot_!(model::Kmeans)
+function plot_in_2d(model::Kmeans)
     y_ = []
     for i = 1:model.k
         push!(y_,model.clu_ind[i])
@@ -145,7 +145,6 @@ function plot_!(model::Kmeans)
     for i = 1:size(x_,1)
         x_[i,:] = model.X[y_[i],:]
     end
-    @show size(x_)
     x_sep = x_[:,1]
     y_sep = x_[:,2]
     num_ = zeros(model.k)
@@ -166,8 +165,9 @@ function plot_!(model::Kmeans)
         end
     end
     df = DataFrame(x = x_sep,y = y_sep , cluster = rep)
-
-    plot(df, x = "x", y = "y", color = "cluster",Geom.point)
+    println("Computing finished")
+    println("Drawing the plot.....Please Wait(Actually Gadfly is quite slow in drawing the first plot)")
+    Gadfly.plot(df, x = "x", y = "y", color = "cluster",Geom.point)
 end
 
 
@@ -178,7 +178,7 @@ function test_kmeans_speed()
     model = Kmeans(k=clu)
     train!(model,X)
     predict!(model)
-    plot_!(model)
+    plot_in_2d(model)
 end
 
 
@@ -189,7 +189,7 @@ function test_kmeans_random()
     model = Kmeans(k=clu,init="random")
     train!(model,X)
     predict!(model)
-    plot_!(model)
+    plot_in_2d(model)
 end
 
 

@@ -1,7 +1,6 @@
-# lightML.jl
+# LightML.jl
 
-
-lightML.jl is a collection of reimplementation of general machine learning algorithm in Julia. 
+LightML.jl is a collection of reimplementation of general machine learning algorithm in Julia. 
 
 The purpose of this project is purely self-educational.
 
@@ -11,53 +10,9 @@ This project is targeting people who want to learn internals of ml algorithms or
 
 The code is much easier to follow than the optimized libraries and easier to play with.
 
-All algorithms are implemented in Julia.
+All algorithms are implemented in Julia. 
 
-# Installation
-
-```julia
-Pkg.clone("https://github.com/memoiry/lightML.jl")
-```
-
-
-# Usage
-
-I have written an example for every implementation. For example,  you could just write test_svm() for testing SVM or test_label_propagtion() for testing label propagation.
-
-### API available 
-
-- test_decision_tree()
-- test_label_propagation()
-- test_LDA()
-- test_naive()
-- test_NeuralNetwork()
-- test_svm()
-- test_kmeans_random()
-- test_PCA()
-- test_spec_cluster()
-- test_classification()
-- test_regression()
-- test_kneast_regression()
-- test_kneast_classification()
-- test_GaussianMixture() **(Fixing)**
-- test_GDA() **(Fixing)**
-- test_HMM() **(Fixing)**
-
-#### SVM
-
-```julia
-using LightML
-
-test_svm()
-```
-
-#### Label propagation
-
-```julia
-using LightML
-
-test_label_propagation()
-```
+You should access test function of every implementation for its usage in detail. Every model is actually constructed in a similar manner.
 
 ## To-do List
 
@@ -77,12 +32,9 @@ test_label_propagation()
 - [x] LDA
 - [x] Label propagation
 - [x] Multi-class LDA
+- [x] AdaBoost
+- [x] Gradient Boosting trees
 - [ ] Random Forests
-- [ ] AdaBoost
-- [ ] Gradient Boosting trees
-- [ ] Factorization machines
-- [ ] Restricted Boltzmann machine
-- [ ] t-Distributed Stochastic Neighbor Embedding
 
 ### Unsupervised Learning:
 
@@ -95,9 +47,51 @@ test_label_propagation()
 - [ ] Partitioning Around Medoids
 
 
+# Installation
+
+```julia
+Pkg.clone("https://github.com/memoiry/LightML.jl")
+```
+
+
+# Usage
+
+I have written an example for every implementation. For example,  you could just write test_svm() for testing SVM or test_label_propagtion() for testing label propagation. 
+
+### API available 
+
+- test_ClassificationTree()
+- test_RegressionTree()
+- test_label_propagation()
+- test_LDA()
+- test_naive()
+- test_NeuralNetwork()
+- test_svm()
+- test_kmeans_random()
+- test_PCA()
+- test_Adaboost()
+- test_BoostingTree()
+- test_spec_cluster()
+- test_LogisticRegression()
+- test_LinearRegression()
+- test_kneast_regression()
+- test_kneast_classification()
+- test_GaussianMixture() **(Fixing)**
+- test_GDA() **(Fixing)**
+- test_HMM() **(Fixing)**
+
 ## Example
 
-### SVM example
+### LinearRegression
+
+![](https:\/\/ooo.0o0.ooo\/2017\/03\/11\/58c2cf6a8726e.png)
+
+### Adaboost
+
+![](https:\/\/ooo.0o0.ooo\/2017\/03\/11\/58c2cf69813bb.png)
+
+
+### SVM
 
 ```julia
 function test_svm()
@@ -128,7 +122,7 @@ function test_kmeans_random()
     model = Kmeans(k=clu,init="random")
     train!(model,X)
     predict!(model)
-    plot_!(model)
+    plot_in_2d(model)
 end
 ```
 
@@ -155,7 +149,7 @@ function test_PCA()
     model = PCA()
     train!(model,X_train)
     X_reduced = transform(model, X_train)
-    plot_(X_reduced, y_train)
+    plot_in_2d(X_reduced, y_train)
 end
 ```
 
@@ -181,6 +175,7 @@ end
 res = reduce(hcat, res)
 show_example(Mat_Label, labels, Mat_Unlabel, res)  
 ```
+
 ![](https:\/\/ooo.0o0.ooo\/2017\/02\/06\/58975f6f57770.png)
 
 

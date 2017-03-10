@@ -60,11 +60,12 @@ end
 function plot_in_2d(model::LDA, X::Matrix, y::Vector)
     X_transformed = transform_(model, X, y)
     X_transformed = convert(Array{Real,2}, X_transformed)
-    @show size(X_transformed)
     x1 = X_transformed[:, 1]
     x2 = X_transformed[:, 2]
     df = DataFrame(x = x1, y = x2, clu = y)
-    plot(df, x = "x", y = "y", color = "clu", Geom.point)
+    println("Computing finished")
+    println("Drawing the plot.....Please Wait(Actually Gadfly is quite slow in drawing the first plot)")
+    Gadfly.plot(df, x = "x", y = "y", color = "clu", Geom.point)
 
 end
 

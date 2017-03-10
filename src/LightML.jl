@@ -6,6 +6,7 @@ using DataFrames
 using ForwardDiff
 using Distributions
 using PyCall
+using PyPlot
 
 @pyimport sklearn.datasets as dat
 
@@ -13,10 +14,11 @@ using PyCall
 
 export 
 
-    test_classification, 
-    test_regression, 
+    test_LinearRegression, 
+    test_LogisticRegression, 
 
-    test_decision_tree,
+    test_ClassificationTree,
+    test_RegressionTree,
 
     test_GDA,
     test_HMM,
@@ -41,10 +43,45 @@ export
 
     test_PCA,
 
-    test_spec_cluster
+    test_spec_cluster,
+
+    test_Adaboost,
+    test_BoostingTree,
+
+    make_cla,
+    make_reg,
+    make_digits,
+    make_blo,
+
+    train!,
+    predict,
+
+    RegressionTree,
+    ClassificationTree,
+    Adaboost,
+    LinearRegression,
+    LogisticRegression,
+    GDA,
+    BoostingTree,
+    KnnRegression,
+    KnnClassifier,
+    label_propagation,
+    show_example,
+    LDA,
+    plot_in_2d,
+    NaiveBayes,
+    NeuralNetwork,
+    svm,
+    GaussianMixture,
+    Kmeans,
+    PCA,
+    transform,
+    spec_clustering
 
 
 
+
+typealias Features Union{String, Real}
 
 
 
@@ -60,6 +97,9 @@ include("supervised_learning/linearDiscriminantAnalysis.jl")
 include("supervised_learning/naivdBayes.jl")
 include("supervised_learning/neuralNetwork_bp.jl")
 include("supervised_learning/support_vector_machine.jl")
+include("supervised_learning/adaboost.jl")
+include("supervised_learning/GradientBoostingTree.jl")
+
 
 #Unsupervised_learning 
 

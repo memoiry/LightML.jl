@@ -10,7 +10,7 @@ end
 function NeuralNetwork(;
                        layers::Vector = [2,2,1],
                        act::String = "sigmoid",
-                       weights::Dict{Integer,Matrix} = Dict{Any,Matrix}(),
+                       weights::Dict{Integer,Matrix} = Dict{Integer,Matrix}(),
                        max_iter::Integer = 500000)
     return NeuralNetwork(layers, act, weights, max_iter)
 end
@@ -24,6 +24,7 @@ function train!(model::NeuralNetwork, X::Matrix, y::Vector)
     @show depth
 
     for i = 1:model.max_iter
+        #batch
         r = rand(1:size(X,1))
         a[1] = X[r,:]
         for j = 2:(depth)
@@ -83,11 +84,13 @@ end
 ## fixed
 
 function test_NeuralNetwork()
+    #xor_network
     X_train = [0.1 0.1; 0.1 0.9; 0.9 0.1; 0.9 0.9]
     y_train = [0.1,0.9,0.9,0.1]
-    model = NeuralNetwork(layers=[2,6,2,3,1])
+    model = NeuralNetwork(layers=[2,3,1])
     train!(model,X_train, y_train)
     predictions = predict(model,X_train)
+    print("regression msea", mean_squared_error(y_train, predictions))
 end
 
 

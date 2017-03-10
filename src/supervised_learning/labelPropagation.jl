@@ -5,7 +5,7 @@ function show_example(Mat_Label, labels, Mat_Unlabel, unlabel_data_labels)
     df = DataFrame(x = mat[:,1], y = mat[:,2], class = label)
     println("Computing finished")
     println("Drawing the plot.....Please Wait(Actually Gadfly is quite slow in drawing the first plot)")
-    plot(df, x = "x", y = "y", color = "class", Geom.point)
+    Gadfly.plot(df, x = "x", y = "y", color = "class", Geom.point)
 end
 
 
@@ -21,8 +21,9 @@ function show_example(Mat_Label, labels, Mat_Unlabel, unlabel_data_labels :: Arr
         group[((i-1)*num_size+1):num_size*i] = i 
     end
     df = DataFrame(x = mat[:,1], y = mat[:,2], iteration = vec(group), class = label[:])
+    println("Computing finished")
     println("drawing the plot....Please Wait")
-    plot(df, x = "x", y = "y", xgroup = "iteration", color = "class", Geom.subplot_grid(Geom.point))
+    Gadfly.plot(df, x = "x", y = "y", xgroup = "iteration", color = "class", Geom.subplot_grid(Geom.point))
 end
 
 

@@ -117,7 +117,7 @@ function predict(model::GaussianMixture,
     return indmax(weighted_likelihood)
 end
 
-
+# maybe some problem
 
 function test_GaussianMixture()
     X_train, y_test= make_blo()

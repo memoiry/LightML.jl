@@ -5,6 +5,8 @@ LightML.jl is a collection of reimplementation of general machine learning algor
 
 The purpose of this project is purely self-educational.
 
+**Also, if you like this project, PLEASE give it a star.**
+
 ### Why?
 
 This project is targeting people who want to learn internals of ml algorithms or implement them from scratch.

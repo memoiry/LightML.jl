@@ -28,17 +28,16 @@ using LightML
 test_PCA()
 ```
 
+
+
 <p align="center">
-    ![ ](https:\/\/ooo.0o0.ooo\/2017\/03\/11\/58c2cf6a8726e.png)
+    <img src="https://ooo.0o0.ooo//2017//03//11//58c2cf6a8726e.png">
 </p>
 
 <p align="center" style="color:rgb(220,220,220);">
     Figure 1: The Digit Dataset using PCA
 </p>
 
-<p align="center">
-    <img src="http://eriklindernoren.se/images/mlp.png">
-</p>
 
 
 

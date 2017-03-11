@@ -31,9 +31,8 @@ test_PCA()
 
 
 <p align="center">
-    <img src="https://ooo.0o0.ooo//2017//03//11//58c2cf6a8726e.png" width="640">
+    <img src="https://ooo.0o0.ooo//2017//03//11//58c36773da5da.png" width="480">
 </p>
-
 <p align="center" style="color:rgb(220,220,220);">
     Figure 1: The Digit Dataset using PCA
 </p>
@@ -101,7 +100,7 @@ test_LinearRegression()
 ```
 
 <p align="center">
-    <img src="https:\/\/ooo.0o0.ooo\/2017\/03\/11\/58c2cf6a8726e.png">
+    <img src="https://ooo.0o0.ooo//2017//03//11//58c2cf6a8726e.png" width="480">
 </p>
 <p align="center" style="color:rgb(220,220,220);">
     Figure 2: The regression Dataset using LinearRegression
@@ -115,7 +114,7 @@ test_Adaboost()
 ```
 
 <p align="center">
-    <img src="https:\/\/ooo.0o0.ooo\/2017\/03\/11\/58c36970c58a8.png">
+    <img src="https://ooo.0o0.ooo//2017//03//11//58c36970c58a8.png" width="480">
 </p>
 <p align="center" style="color:rgb(220,220,220);">
     Figure 3: The classification Dataset using Adaboost
@@ -131,7 +130,7 @@ test_svm()
 ```
 
 <p align="center">
-    <img src="https:\/\/ooo.0o0.ooo\/2017\/03\/11\/58c367760e76a.png">
+    <img src="https://ooo.0o0.ooo//2017//03//11//58c367760e76a.png" width="480">
 </p>
 <p align="center" style="color:rgb(220,220,220);">
     Figure 4: The classification Dataset using LinearRegression
@@ -145,7 +144,7 @@ test_ClassificationTree()
 ```
 
 <p align="center">
-    <img src="https:\/\/ooo.0o0.ooo\/2017\/03\/11\/58c36775113e6.png">
+    <img src="https://ooo.0o0.ooo//2017//03//11//58c36775113e6.png" width="480">
 </p>
 <p align="center" style="color:rgb(220,220,220);">
     Figure 5: The digit Dataset using Classification Tree
@@ -160,7 +159,7 @@ test_kmeans_random()
 ```
 
 <p align="center">
-    <img src="https:\/\/ooo.0o0.ooo\/2017\/02\/18\/58a8445e2114b.png">
+    <img src="https://ooo.0o0.ooo//2017//02//18//58a8445e2114b.png" width="480">
 </p>
 <p align="center" style="color:rgb(220,220,220);">
     Figure 6: The blobs Dataset using k-means
@@ -174,7 +173,7 @@ test_LDA()
 ```
 
 <p align="center">
-    <img src="https:\/\/ooo.0o0.ooo\/2017\/03\/02\/58b82861bade3.png">
+    <img src="https://ooo.0o0.ooo//2017//03//02//58b82861bade3.png" width="480">
 </p>
 <p align="center" style="color:rgb(220,220,220);">
     Figure 7: The classification Dataset using LDA

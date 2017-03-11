@@ -29,7 +29,7 @@ test_PCA()
 ```
 
 <p align="center">
-    <img src="https:\/\/ooo.0o0.ooo\/2017\/03\/11\/58c36773da5da.png">
+    <img src="https:\/\/ooo.0o0.ooo\/2017\/03\/11\/58c36773da5da.png" width="48">
 </p>
 
 <p align="center" style="color:rgb(220,220,220);">

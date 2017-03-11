@@ -6,17 +6,14 @@ function spec_clustering(data,k)
     w = computing_similarity(data)
     d = diagm(vec(sum(w,1)))
     l = d-w
-    @show l
     temp = eig(l)
     temp = temp[2]
-    #e_map = temp[:,1:(k-1)] #seems that the largest k eigenvalue works? 
-    e_map = temp[:,(end-k+1):end]
+    e_map = temp[:,1:(k-1)] #seems that the largest k eigenvalue works? 
+    #e_map = temp[:,(end-k+1):end]
     model = Kmeans(k=k)
     train!(model,e_map)
     predict!(model)
-    model.X = data
-    plot_!(model)
-    return model.clusters
+    return model
 end
 
 
@@ -43,5 +40,9 @@ function test_spec_cluster()
 
     X, y = make_blo()
     clu = length(unique(y))
-    spec_clustering(X,clu)
+    model = spec_clustering(X,clu)
+    predictions = model.clusters
+    plot_in_2d(model)
+
+
 end

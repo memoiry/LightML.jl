@@ -66,11 +66,18 @@ function predict!(model::Kmeans)
 end
 
 function update_centroid!(model)
-    @show model.centroid
     for i = 1:model.k
+        if !haskey(model.clusters, i)
+            r = 0
+            for i = 1:model.k
+                if haskey(model.clusters, i)
+                    r = i
+                end
+            end
+            model.clusters[i] = model.clusters[r]
+        end
         model.centroid[i,:] = mean(model.clusters[i],1)
     end
-    @show model.centroid
 end
 
 
@@ -141,10 +148,23 @@ function plot_in_2d(model::Kmeans)
         push!(y_,model.clu_ind[i])
     end
     y_ = reduce(vcat,y_)
-    x_ = zeros(size(y_,1),2)
+    len = size(model.X, 2)
+    x_ = zeros(size(y_,1),len)
     for i = 1:size(x_,1)
         x_[i,:] = model.X[y_[i],:]
     end
+    # if not 2d perform PCA
+
+
+    #PCA
+    if size(x_, 2) > 2
+        pca_model = PCA()
+        train!(pca_model, x_)
+        x_ = transform(pca_model, x_)
+        x_ = x_[:, 1:2]
+    end
+
+
     x_sep = x_[:,1]
     y_sep = x_[:,2]
     num_ = zeros(model.k)

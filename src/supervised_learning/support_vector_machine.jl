@@ -149,18 +149,19 @@ end
 
 
 function test_svm()
-    X, y = dat.make_classification(n_samples=1200, n_features=10, n_informative=5,
-                               random_state=1111, n_classes=2, class_sep=1.75,)
-    # Convert y to {-1, 1}
-    y = (y * 2) - 1
-    X_train, X_test, y_train, y_test = make_cla()
-
+    X_train, X_test, y_train, y_test = make_cla(n_features = 14)
+    predictions = 0
     for kernel in ["linear", "rbf"]
         model = svm(X_train, y_train, max_iter=500, kernel=kernel, C=0.6)
         train!(model)
         predictions = predict(model,X_test)
         println("Classification accuracy $(kernel): $(accuracy(y_test, predictions))")
+        
     end
+    #PCA
+    pca_model = PCA()
+    train!(pca_model, X_test)
+    plot_in_2d(pca_model, X_test, predictions, "svm")
 end
 
 

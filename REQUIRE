@@ -1,0 +1,6 @@
+Gadfly
+DataFrames
+ForwardDiff
+PyPlot
+Distributions
+PyCall

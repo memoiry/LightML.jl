@@ -84,6 +84,12 @@ function test_naive()
     train!(model,X_train, y_train)
     predictions = predict(model,X_test)
     print("classification accuracy", accuracy(y_test, predictions))
+
+    #PCA
+
+    pca_model = PCA()
+    train!(pca_model, X_test)
+    plot_in_2d(pca_model, X_test, predictions, "Naive Bayes")
 end
 
 

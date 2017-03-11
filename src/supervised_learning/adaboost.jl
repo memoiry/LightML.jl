@@ -96,14 +96,21 @@ end
 
 
 function test_Adaboost()
-    X_train, X_test, y_train, y_test = make_cla(n_features = 4, n_samples = 200)
-    for i = 1:20
-        model = Adaboost(n_clf = i)
-        train!(model,X_train, y_train)
-        predictions = predict(model,X_test)
-        print("The number of week classifiers ", i)
-        println(", classification accuracy: ", accuracy(y_test, predictions))
-    end
+    X_train, X_test, y_train, y_test = make_cla(n_features = 8, n_samples = 1000)
+
+    #Adaboost
+    model = Adaboost()
+    train!(model,X_train, y_train)
+    predictions = predict(model,X_test)
+    println("The number of week classifiers ", 10)
+    println("classification accuracy: ", accuracy(y_test, predictions))
+
+    #PCA
+
+    pca_model = PCA()
+    train!(pca_model, X_test)
+    plot_in_2d(pca_model, X_test, predictions, "Adaboost")
+
 end
 
 

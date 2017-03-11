@@ -48,23 +48,22 @@ function transform(model::PCA,
     return x
 end
 
-function plot_in_2d(X::Matrix, y::Vector)
-    println("computing finished, ploting....")
+function plot_in_2d(model::PCA, X::Matrix, y::Vector, title::String)
+    X = transform(model, X)
     x1 = X[:, 1]
     x2 = X[:, 2]
     df = DataFrame(x = x1, y = x2, clu = y)
     println("Computing finished")
     println("Drawing the plot.....Please Wait(Actually Gadfly is quite slow in drawing the first plot)")
-    Gadfly.plot(df, x = "x", y = "y", color = "clu", Geom.point)
+    Gadfly.plot(df, x = "x", y = "y", color = "clu", Geom.point, Guide.title(title))
 end
 
 
 function test_PCA()
-    X_train, X_test, y_train, y_test = make_cla()
+    X_train, X_test, y_train, y_test = make_digits()
     model = PCA()
     train!(model,X_train)
-    X_reduced = transform(model, X_train)
-    plot_in_2d(X_reduced, y_train)
+    plot_in_2d(model, X_train, y_train, "PCA")
 end
 
 

@@ -25,10 +25,16 @@ Pkg.clone("https://github.com/memoiry/LightML.jl")
 
 ```julia
 using LightML
-test_label_propagation()
+test_PCA()
 ```
 
-![](https:\/\/ooo.0o0.ooo\/2017\/02\/06\/58975f6f57770.png)
+<p align="center">
+    <img src="https:\/\/ooo.0o0.ooo\/2017\/03\/11\/58c36773da5da.png">
+</p>
+<p align="center" style="color:rgb(220,220,220);">
+    Figure 1: The Digit Dataset using PCA
+</p>
+
 
 
 
@@ -85,77 +91,90 @@ test_label_propagation()
 
 ### LinearRegression
 
-![](https:\/\/ooo.0o0.ooo\/2017\/03\/11\/58c2cf6a8726e.png)
+```julia
+using LightML
+test_LinearRegression()
+```
+
+<p align="center">
+    <img src="https:\/\/ooo.0o0.ooo\/2017\/03\/11\/58c2cf6a8726e.png">
+</p>
+<p align="center" style="color:rgb(220,220,220);">
+    Figure 2: The regression Dataset using LinearRegression
+</p>
 
 ### Adaboost
 
-![](https:\/\/ooo.0o0.ooo\/2017\/03\/11\/58c2cf69813bb.png)
+```julia
+using LightML
+test_Adaboost()
+```
+
+<p align="center">
+    <img src="https:\/\/ooo.0o0.ooo\/2017\/03\/11\/58c36970c58a8.png">
+</p>
+<p align="center" style="color:rgb(220,220,220);">
+    Figure 3: The classification Dataset using Adaboost
+</p>
+
 
 
 ### SVM
 
 ```julia
-function test_svm()
-    X, y = dat.make_classification(n_samples=1200, n_features=10, n_informative=5,
-                               random_state=1111, n_classes=2, class_sep=1.75,)
-    # Convert y to {-1, 1}
-    y = (y * 2) - 1
-    X_train, X_test, y_train, y_test = make_cla()
-
-    for kernel in ["linear", "rbf"]
-        model = svm(X_train, y_train, max_iter=500, kernel=kernel, C=0.6)
-        train(model)
-        predictions = predict(model,X_test)
-        println("Classification accuracy $(kernel): $(accuracy(y_test, predictions))")
-    end
-end
+using LightML
+test_svm()
 ```
 
-![](https:\/\/ooo.0o0.ooo\/2017\/02\/11\/589ee68aaf56d.png)
+<p align="center">
+    <img src="https:\/\/ooo.0o0.ooo\/2017\/03\/11\/58c367760e76a.png">
+</p>
+<p align="center" style="color:rgb(220,220,220);">
+    Figure 4: The classification Dataset using LinearRegression
+</p>
+
+### Classification Tree
+
+```julia
+using LightML
+test_ClassificationTree()
+```
+
+<p align="center">
+    <img src="https:\/\/ooo.0o0.ooo\/2017\/03\/11\/58c36775113e6.png">
+</p>
+<p align="center" style="color:rgb(220,220,220);">
+    Figure 5: The digit Dataset using Classification Tree
+</p>
+
 
 ### kmeans
 
 ```julia
-function test_kmeans_random()
-    X, y = make_blo()
-    clu = length(unique(y))
-    @show clu
-    model = Kmeans(k=clu,init="random")
-    train!(model,X)
-    predict!(model)
-    plot_in_2d(model)
-end
+using LightML
+test_kmeans_random()
 ```
 
-![](https:\/\/ooo.0o0.ooo\/2017\/02\/18\/58a8445e2114b.png)
+<p align="center">
+    <img src="https:\/\/ooo.0o0.ooo\/2017\/02\/18\/58a8445e2114b.png">
+</p>
+<p align="center" style="color:rgb(220,220,220);">
+    Figure 6: The blobs Dataset using k-means
+</p>
 
 ### LDA
 
 ```julia
-function test_LDA()
-    X_train, X_test, y_train, y_test = make_cla()
-    model = LDA()
-    plot_in_2d(model, X_train, y_train)
-end
+using LightML
+test_LDA()
 ```
 
-![](https:\/\/ooo.0o0.ooo\/2017\/03\/02\/58b82861bade3.png)
-
-### PCA
-
-
-```julia
-function test_PCA()
-    X_train, X_test, y_train, y_test = make_cla()
-    model = PCA()
-    train!(model,X_train)
-    X_reduced = transform(model, X_train)
-    plot_in_2d(X_reduced, y_train)
-end
-```
-
-![](https:\/\/ooo.0o0.ooo\/2017\/03\/03\/58b8c8ddc195b.png)
-
+<p align="center">
+    <img src="https:\/\/ooo.0o0.ooo\/2017\/03\/02\/58b82861bade3.png">
+</p>
+<p align="center" style="color:rgb(220,220,220);">
+    Figure 7: The classification Dataset using LDA
+</p>
 
 
 

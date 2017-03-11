@@ -52,6 +52,7 @@ export
     make_reg,
     make_digits,
     make_blo,
+    make_iris,
 
     train!,
     predict,

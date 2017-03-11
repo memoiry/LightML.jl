@@ -158,9 +158,9 @@ function sigmoid_prime(x)
 end
 
 
-function make_cla(;n_samples = 1200, n_features = 10)
+function make_cla(;n_samples = 1200, n_features = 10, n_classes = 2)
     X, y = dat.make_classification(n_samples=n_samples, n_features=n_features,
-                               random_state=1111, n_classes=2, class_sep=1.75,)
+                               random_state=1111, n_classes= n_classes)
     # Convert y to {-1, 1}
     y = (y * 2) - 1
     X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=0.8,
@@ -172,6 +172,15 @@ function make_reg(;n_samples = 200,
                    n_features = 10)
     X, y = dat.make_regression(n_samples=n_samples, n_features=n_features, n_targets=1, noise=0.05,
                            random_state=1111, bias=0.5)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=0.8,
+                                                        rand_seed=1111)
+    X_train, X_test, y_train, y_test
+end
+
+function make_iris()
+    data= dat.load_iris()
+    X = data["data"]
+    y = data["target"]
     X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=0.8,
                                                         rand_seed=1111)
     X_train, X_test, y_train, y_test

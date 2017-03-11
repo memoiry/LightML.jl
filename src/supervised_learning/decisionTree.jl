@@ -224,11 +224,18 @@ end
 ## seems there is some problem...
 
 function test_ClassificationTree()
-    X_train, X_test, y_train, y_test = make_cla()
+    X_train, X_test, y_train, y_test = make_digits()
     model = ClassificationTree()
     train!(model,X_train, y_train)
     predictions = predict(model,X_test)
     print("classification accuracy", accuracy(y_test, predictions))
+
+
+    #PCA
+
+    pca_model = PCA()
+    train!(pca_model, X_test)
+    plot_in_2d(pca_model, X_test, predictions, "ClassificationTree")
 end
 
 

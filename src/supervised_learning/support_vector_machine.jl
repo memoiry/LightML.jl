@@ -102,7 +102,7 @@ function train!(model::SVM)
         end
     end
 
-    println("Convergence has reached after $(iters). for $(model.kernel)")
+    #println("Convergence has reached after $(iters). for $(model.kernel)")
 
     # Save support vectors index
     model.sv_indx = find(model.alpha .> 0)

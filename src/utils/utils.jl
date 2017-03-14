@@ -2,10 +2,31 @@
 
 
 function one_hot(y)
-    n = maximun(y)
-    return eye(n+1)[y,]
+    n = length(unique(y))
+    if minimum(y) == 0
+        return eye(n)[(y+1),:]
+    elseif minimum(y) == -1 && n == 2
+        y = trunc(Int64,(y + 1)/2+1)
+        return eye(2)[y,:]
+
+    end
+    return eye(n)[y,:]
 end
 
+function softmax(x::Vector)
+    x = exp(x)
+    pos = x./sum(x)
+    return indmax(pos)
+end
+
+function softmax(X::Matrix)
+    n_sample = size(X,1)
+    res = zeros(n_sample)
+    for i = 1:n_sample 
+        res[i] = softmax(X[i,:])
+    end
+    return res
+end
 
 function calc_variance(X)
     n_sample = size(X,1)
@@ -13,6 +34,26 @@ function calc_variance(X)
     de_mean = X - mean_ 
     return 1/n_sample * diag(de_mean' * de_mean)
 end
+
+
+function get_random_subsets(X, y , n_subsets;replacement = true)
+    n_sample, n_feature = size(X)
+
+    X_y = hcat(X, y)
+    X_y = X_y[shuffle(1:n_sample), :]
+    subsample_size = trunc(Int64,n_sample / 2)
+    if replacement == true
+        subsample_size = n_sample
+    end
+    sets = zeros(n_subsets,subsample_size, n_feature + 1)
+    for i = 1:n_subsets
+        idx = sample(1:n_sample, subsample_size, replace = replacement)
+        temp = X_y[idx,:]
+        sets[i,:,:] = temp
+    end
+    return sets
+end
+
 
 function train_test_split(X,y;train_size=0.75,rand_seed=2135)
     srand(rand_seed)
@@ -26,6 +67,9 @@ function train_test_split(X,y;train_size=0.75,rand_seed=2135)
 end
 
 function calc_entropy(y)
+    if size(y,2) > 1
+        y = unhot(y)
+    end
     feature_unique = unique(y)
     num_sample = length(y)
     entro = 0
@@ -67,19 +111,21 @@ end
 
 function unhot(predicted)
     """Convert one-hot representation into one column."""
-    actual = []
-    for i = 1size(predicted, 1)
-        predicted_data = predicted[i,]
-        push!(actual,indmax(predicted_data)-1)
+    actual = zeros(size(predicted,1))
+    for i = 1:size(predicted, 1)
+        predicted_data = predicted[i,:]
+        actual[i] = indmax(predicted_data)
     end
-    actual = reduce(vcat,actual)
+    return actual
 end
 
 function normalize_(X::Matrix)
     std_ = std(X, 1)
     mean_ = mean(X, 1)
     for i = 1:size(X,2)
-        X[:,i] = (X[:, i] - mean_[i])/std_[i]
+        if std_[i] != 0
+            X[:,i] = (X[:, i] - mean_[i])/std_[i]
+        end
     end
     return X
 end

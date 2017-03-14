@@ -86,7 +86,7 @@ end
 function train!(model::LogisticRegression,
                 X::Matrix,
                 y::Vector)
-    println("LogisticRegression!$(model.max_iters)")
+    #println("LogisticRegression!$(model.max_iters)")
     #global model = model1
     n_sample = size(X,1)
     n_feature = size(X,2)
@@ -103,7 +103,7 @@ function train!(model::LogisticRegression,
     while abs(errors_norm) > model.tolerance && iter_count < model.max_iters
         model.params -= model.C*(X' * (sigmoid(X * model.params) - y))
         errors_norm = norm(predict(model, X[:, 1:(end-1)]) - y)
-        println("Epoch: $(iter_count): current errors norm is $(errors_norm)")
+        #println("Epoch: $(iter_count): current errors norm is $(errors_norm)")
         iter_count = iter_count + 1
     end
 end

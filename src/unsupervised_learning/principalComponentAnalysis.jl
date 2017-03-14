@@ -28,7 +28,7 @@ function train!(model::PCA, X::Matrix)
         cov_ = cov(X_de_mean)
         D,V = eigs(cov_, nev = model.n_components)
     end
-    model.components = V[:, 1:2]
+    model.components = V[:, 1:model.n_components]
 end
 
 function transform(model::PCA, 

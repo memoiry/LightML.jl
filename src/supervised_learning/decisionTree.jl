@@ -1,11 +1,12 @@
 
 
 type DecisionNode
-    label::Features
+    label::Union{Vector, Int64, String, Float64}
     feature_index::Integer
     threshold::Features
     true_branch::Union{DecisionNode,String}
     false_branch::Union{DecisionNode, String}
+    y_num::Int64
 end
 
 function DecisionNode(;
@@ -13,8 +14,9 @@ function DecisionNode(;
                       feature_index = 0,
                       threshold = Inf,
                       true_branch = "nothing",
-                      false_branch = "nothing")
-    return DecisionNode(label, feature_index, threshold,true_branch, false_branch)
+                      false_branch = "nothing",
+                      y_num = 1)
+    return DecisionNode(label, feature_index, threshold,true_branch, false_branch, y_num)
 end
 
 abstract DecisionTree
@@ -34,6 +36,7 @@ type ClassificationTree <: DecisionTree
     min_gain::Float64 
     min_samples_split::Integer
     current_depth::Integer
+    y_num::Integer
 end
 
 function ClassificationTree(;
@@ -41,9 +44,10 @@ function ClassificationTree(;
                       min_samples_split = 2,
                       min_gain = 1e-7,
                       max_depth = 1e7,
-                      current_depth = 0)
+                      current_depth = 0,
+                      y_num = 1)
     return ClassificationTree(root, max_depth, min_gain,
-        min_samples_split, current_depth)
+        min_samples_split, current_depth, y_num)
 end
 
 function RegressionTree(;
@@ -57,7 +61,7 @@ function RegressionTree(;
 end
 
 
-function train!(model::DecisionTree, X::Matrix, y::Vector)
+function train!(model::DecisionTree, X::Matrix, y::Array)
     model.current_depth = 0
     #Normalize
     #X_y = [X y]
@@ -68,16 +72,15 @@ function train!(model::DecisionTree, X::Matrix, y::Vector)
 end
 
 
-function build_tree(model::DecisionTree, X::Matrix, y::Vector)
-
+function build_tree(model::DecisionTree, X::Matrix, y::Array)
+    model.y_num = size(y,2)
     entropy = calc_entropy(y)
     largest_impurity = 0
     best_criteria = 0
     best_sets = 0
-
+    n_features = size(X, 2)
     X_y = hcat(X, y)
-    n_samples, n_features = size(X_y)
-    n_features = n_features - 1
+    n_samples = size(X_y,1)
     if n_samples >= model.min_samples_split
         for i = 1:n_features
             feature_values = X_y[:, i]
@@ -94,10 +97,11 @@ function build_tree(model::DecisionTree, X::Matrix, y::Vector)
             for threshold in unique_values
                 Xy_1, Xy_2 = split_at_feature(X_y, i, threshold)
                 if size(Xy_1,1) > 0 && size(Xy_2,1) > 0
-                    y1 = Xy_1[:, end]
-                    y2 = Xy_2[:, end]
-                    impurity = impurity_calc(model, y, y1, y2)[1]
+                    y1 = Xy_1[:, (n_features+1):end]
+                    y2 = Xy_2[:, (n_features+1):end]
+                    impurity = impurity_calc(model, y, y1, y2)
                     if impurity > largest_impurity
+                        #println("$(impurity)")
                         largest_impurity = impurity
                         best_criteria = Dict("feature_i" => i, "threshold" => threshold)
                         best_sets = Dict("left_branch" => Xy_1, "right_branch" => Xy_2)
@@ -107,8 +111,8 @@ function build_tree(model::DecisionTree, X::Matrix, y::Vector)
         end
     end
     if model.current_depth < model.max_depth && largest_impurity > model.min_gain
-        leftX, leftY = best_sets["left_branch"][:, 1:(end-1)], best_sets["left_branch"][:, end]
-        rightX, rightY = best_sets["right_branch"][:, 1:(end-1)], best_sets["right_branch"][:, end]
+        leftX, leftY = best_sets["left_branch"][:, 1:n_features], best_sets["left_branch"][:, (n_features+1):end]
+        rightX, rightY = best_sets["right_branch"][:, 1:n_features], best_sets["right_branch"][:, (n_features+1):end]
         true_branch = build_tree(model, leftX, leftY)
         false_branch = build_tree(model, rightX, rightY)
         model.current_depth += 1
@@ -124,11 +128,15 @@ function build_tree(model::DecisionTree, X::Matrix, y::Vector)
 end
 
 
-function leaf_value_calc(model::RegressionTree, y::Vector)
+function leaf_value_calc(model::RegressionTree, y::Array)
     return mean(y)
 end
 
-function leaf_value_calc(model::ClassificationTree, y::Vector)
+function leaf_value_calc(model::ClassificationTree, y::Array)
+    labels = size(y,2)
+    if labels > 1
+        y = unhot(y)
+    end
     feature = unique(y)
     most_common = nothing
     count_max = 0
@@ -138,6 +146,10 @@ function leaf_value_calc(model::ClassificationTree, y::Vector)
             count_max = count
             most_common = i
         end
+    end
+    if labels > 1
+        most_common = trunc(Int64, most_common[1])
+        most_common = eye(labels)[most_common,:]
     end
     return most_common
 end
@@ -156,8 +168,9 @@ function impurity_calc(model::RegressionTree, y, y1, y2)
 end
 
 function impurity_calc(model::ClassificationTree, y, y1, y2)
-    p = length(y1)/length(y)
+    p = size(y1,1)/size(y,1)
     entro = calc_entropy(y)
+    #println("entro: $(entro), p: $(p), res: $(entro - (p * calc_entropy(y1) + (1-p) * calc_entropy(y2)))")
     return entro - (p * calc_entropy(y1) + (1-p) * calc_entropy(y2))
 end
 
@@ -166,9 +179,17 @@ function predict(model::DecisionTree,
                  x::Matrix)
     n = size(x,1)
     res = zeros(n)
-    for i = 1:n 
-        res[i] = predict(model.root, x[i,:])
+    if model.y_num == 1
+        for i = 1:n 
+            res[i] = predict(model.root, x[i,:])
+        end
+    else
+        res = zeros(n, model.y_num)
+        for i = 1:n
+            res[i,:] = predict(model.root, x[i,:])
+        end
     end
+
     return res
 end
 
@@ -221,21 +242,24 @@ function split_at_feature(X, feature_i, threshold)
 end
 
 
-## seems there is some problem...
 
 function test_ClassificationTree()
-    X_train, X_test, y_train, y_test = make_digits()
+    X_train, X_test, y_train, y_test = make_iris()
+    y_train = one_hot(y_train)
+    y_test = one_hot(y_test)
     model = ClassificationTree()
     train!(model,X_train, y_train)
     predictions = predict(model,X_test)
+    y_test = unhot(y_test)
+    predictions = unhot(predictions)
     print("classification accuracy", accuracy(y_test, predictions))
 
 
     #PCA
 
-    pca_model = PCA()
-    train!(pca_model, X_test)
-    plot_in_2d(pca_model, X_test, predictions, "ClassificationTree")
+    #pca_model = PCA()
+    #train!(pca_model, X_test)
+    #plot_in_2d(pca_model, X_test, predictions, "ClassificationTree")
 end
 
 

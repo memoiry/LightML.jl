@@ -1,28 +1,29 @@
 
 
 type NeuralNetwork
-    layers::Vector
+    hidden::Union{Vector,Int64}
     act::String
     weights::Dict{Integer, Matrix}
     max_iter::Integer
 end
 
 function NeuralNetwork(;
-                       layers::Vector = [2,2,1],
+                       hidden::Union{Vector,Int64} = [2,2,1],
                        act::String = "sigmoid",
                        weights::Dict{Integer,Matrix} = Dict{Integer,Matrix}(),
                        max_iter::Integer = 500000)
-    return NeuralNetwork(layers, act, weights, max_iter)
+    return NeuralNetwork(hidden, act, weights, max_iter)
 end
 
 function train!(model::NeuralNetwork, X::Matrix, y::Vector)
+    if typeof(model.hidden) <: Integer
+        model.hidden = [size(X, 2), model.hidden, size(y, 2)]
+    end
     init_weights(model)
-    depth = size(model.layers,1)
+    depth = size(model.hidden,1)
     a::Dict{Integer, Vector} = Dict()
     z::Dict{Integer, Vector} = Dict()
     X = hcat(X,ones(size(X,1)))
-    @show depth
-
     for i = 1:model.max_iter
         #batch
         r = rand(1:size(X,1))
@@ -33,9 +34,9 @@ function train!(model::NeuralNetwork, X::Matrix, y::Vector)
         end
         delta = Dict{Integer, Vector}()
         error_ = a[depth] - y[r]
-        if i % 1000 == 0
-            println("$(i) epochs: error $(error_)")
-        end
+        #if i % 1000 == 0
+        #    println("$(i) epochs: error $(error_)")
+        #end
         delta[depth] = error_ .* sigmoid_prime(z[depth])
         for j = depth-1:-1:2
             delta[j] = vec(delta[j+1]' * model.weights[j]') .* sigmoid_prime(z[j])  
@@ -51,17 +52,17 @@ function train!(model::NeuralNetwork, X::Matrix, y::Vector)
 end
 
 function init_weights(model::NeuralNetwork)
-    depth_ = size(model.layers,1)
+    depth_ = size(model.hidden,1)
     for i = 1:(depth_-2)
-        model.weights[i] = 2*rand(model.layers[i]+1,model.layers[i+1]+1)-1
+        model.weights[i] = 2*rand(model.hidden[i]+1,model.hidden[i+1]+1)-1
     end
-    model.weights[depth_-1] = 2*rand(model.layers[depth_-1]+1,model.layers[depth_])-1
+    model.weights[depth_-1] = 2*rand(model.hidden[depth_-1]+1,model.hidden[depth_])-1
 end
 
 function predict(model::NeuralNetwork, 
                  x::Matrix)
     n = size(x,1)
-    m = model.layers[end]
+    m = model.hidden[end]
     res = zeros(n,m)
     for i = 1:n 
         res[i,:] = predict(model, x[i,:])
@@ -73,7 +74,7 @@ function predict(model::NeuralNetwork,
                  x::Vector)
     x = x'
     x = hcat(x,[1])
-    for i = 1:length(model.layers)-1
+    for i = 1:length(model.hidden)-1
         x = sigmoid(x * model.weights[i])
     end
     return x
@@ -87,7 +88,7 @@ function test_NeuralNetwork()
     #xor_network
     X_train = [0.1 0.1; 0.1 0.9; 0.9 0.1; 0.9 0.9]
     y_train = [0.1,0.9,0.9,0.1]
-    model = NeuralNetwork(layers=[2,3,1])
+    model = NeuralNetwork(hidden=10)
     train!(model,X_train, y_train)
     predictions = predict(model,X_train)
     print("regression msea", mean_squared_error(y_train, predictions))

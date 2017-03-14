@@ -1,16 +1,17 @@
 
-using Gadfly
-using DataFrames    
+ 
 
 type LDA
     n_components::Integer
     method::String
+    w::Vector
 end
 
 function LDA(;
              n_components::Integer = 2,
-             method = "svd")
-    return LDA(n_components, method)
+             method = "svd",
+             w::Vector = zeros(10))
+    return LDA(n_components, method, w)
 end
 
 
@@ -51,6 +52,7 @@ function transform_(model::LDA, X::Matrix, y::Vector)
     eigval = eigval[1:model.n_components]
     eigvec = eigvec[:, 1:model.n_components]
     X_transformed = X * eigvec
+    model.w = eigvec[:,1]
 
     return X_transformed
 
@@ -66,14 +68,34 @@ function plot_in_2d(model::LDA, X::Matrix, y::Vector)
     println("Computing finished")
     println("Drawing the plot.....Please Wait(Actually Gadfly is quite slow in drawing the first plot)")
     Gadfly.plot(df, x = "x", y = "y", color = "clu", Geom.point)
+end
 
+function train!(model::LDA, X::Matrix, y::Vector)
+    transform_(model, X, y)
+end
+
+function predict(model::LDA, X::Matrix)
+    temp = X * model.w
+    temp = sign(temp)
+    return temp
 end
 
 function test_LDA()
     X_train, X_test, y_train, y_test = make_cla()
     model = LDA()
+    train!(model, X_train, y_train)
+    predictions = predict(model, X_test)
+    print("classification accuracy", accuracy(y_test, predictions))
+
     plot_in_2d(model, X_train, y_train)
 end
+
+function test_LDA_reduction()
+    X_train, X_test, y_train, y_test = make_cla()
+    model = LDA()
+    plot_in_2d(model, X_train, y_train)
+end
+
 
 
 

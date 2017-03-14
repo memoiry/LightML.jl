@@ -5,7 +5,6 @@ LightML.jl is a collection of reimplementation of general machine learning algor
 
 The purpose of this project is purely self-educational.
 
-**Also, if you like this project, PLEASE give it a star.**
 
 ### Why?
 
@@ -22,6 +21,17 @@ You should access test function of every implementation for its usage in detail.
 ```julia
 Pkg.clone("https://github.com/memoiry/LightML.jl")
 ```
+
+### Running Demo
+
+```julia
+using LightML
+demo()
+```
+
+<p align="center">
+<img src="https://ooo.0o0.ooo//2017//03//14//58c801db36032.png" width="480"></img>
+</p>
 
 ### Running Implementations
 
@@ -41,8 +51,6 @@ test_PCA()
 
 
 
-
-
 ## Current Implementations
 
 #### Supervised Learning:
@@ -55,12 +63,13 @@ test_PCA()
 - [Logistic Regression](src/supervised_learning/baseRegression.jl)
 - [Multilayer Perceptron](src/supervised_learning/neuralNetwork_bp.jl)
 - [Naive Bayes](src/supervised_learning/naivdBayes.jl)
+- [hiddenMarkovModel](src/supervised_learning/hiddenMarkovModel.jl)
 - [Ridge Regression](src/supervised_learning/baseRegression.jl)
 - [Lasso Regression](src/supervised_learning/baseRegression.jl)
 - [Support Vector Machine](src/supervised_learning/support_vector_machine.jl)
 - [Hidden Markov Model](src/supervised_learning/hiddenMarkovModel.jl)
 - [Label propagation](src/supervised_learning/labelPropagation.jl)
-- [ ] Random Forests	
+- [Random Forests](src/supervised_learning/randomForests.jl)
 - [ ] XGBoost
 
 #### Unsupervised Learning:
@@ -68,6 +77,7 @@ test_PCA()
 - [Gaussian Mixture Model](src/unsupervised_learning/gaussianMixtureModel.jl)
 - [K-Means](src/unsupervised_learning/kMeans.jl)
 - [Principal Component Analysis](src/unsupervised_learning/principalComponentAnalysis.jl)
+- [Spectral Clustering](src/unsupervised_learning/spectralCluster.jl)
 - [ ] Apriori
 
 #### Test Example available 

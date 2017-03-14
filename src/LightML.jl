@@ -8,6 +8,7 @@ using ForwardDiff
 using Distributions
 using PyCall
 using PyPlot
+using DataStructures
 
 @pyimport sklearn.datasets as dat
 
@@ -27,9 +28,11 @@ export
     test_kneast_regression,
     test_kneast_classification,
 
+
     test_label_propagation,
 
     test_LDA,
+    test_LDA_reduction,
 
     test_naive,
 
@@ -48,6 +51,7 @@ export
 
     test_Adaboost,
     test_BoostingTree,
+    test_randomForest,
 
     make_cla,
     make_reg,
@@ -60,6 +64,7 @@ export
 
     RegressionTree,
     ClassificationTree,
+    randomForest,
     Adaboost,
     LinearRegression,
     LogisticRegression,
@@ -100,6 +105,7 @@ include("supervised_learning/naivdBayes.jl")
 include("supervised_learning/neuralNetwork_bp.jl")
 include("supervised_learning/support_vector_machine.jl")
 include("supervised_learning/adaboost.jl")
+include("supervised_learning/randomForests.jl")
 include("supervised_learning/GradientBoostingTree.jl")
 
 
@@ -113,6 +119,8 @@ include("unsupervised_learning/spectralCluster.jl")
 #Utils
 
 include("utils/utils.jl")
+include("utils/demo.jl")
+
 
 
 

@@ -71,11 +71,7 @@ function log_pdf(model::NaiveBayes,
     return log(n./d)
 end
 
-function softmax(x::Vector)
-    x = exp(x)
-    pos = x./sum(x)
-    return indmax(pos)
-end
+
 
 
 function test_naive()

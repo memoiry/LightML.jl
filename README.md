@@ -32,7 +32,9 @@ demo()
 <p align="center">
 <img src="https://ooo.0o0.ooo//2017//03//14//58c801db36032.png" width="480"></img>
 </p>
-
+<p align="center" style="color:rgb(220,220,220);">
+    Figure 1: The Digit Dataset using Demo algorithms
+</p>
 ### Running Implementations
 
 ```julia
@@ -46,7 +48,7 @@ test_PCA()
     <img src="https://ooo.0o0.ooo//2017//03//11//58c36773da5da.png" width="480">
 </p>
 <p align="center" style="color:rgb(220,220,220);">
-    Figure 1: The Digit Dataset using PCA
+    Figure 2: The Digit Dataset using PCA
 </p>
 
 
@@ -115,7 +117,7 @@ test_LinearRegression()
     <img src="https://ooo.0o0.ooo//2017//03//11//58c2cf6a8726e.png" width="480">
 </p>
 <p align="center" style="color:rgb(220,220,220);">
-    Figure 2: The regression Dataset using LinearRegression
+    Figure 3: The regression Dataset using LinearRegression
 </p>
 
 ### Adaboost
@@ -129,7 +131,7 @@ test_Adaboost()
     <img src="https://ooo.0o0.ooo//2017//03//11//58c36970c58a8.png" width="480">
 </p>
 <p align="center" style="color:rgb(220,220,220);">
-    Figure 3: The classification Dataset using Adaboost
+    Figure 4: The classification Dataset using Adaboost
 </p>
 
 
@@ -145,7 +147,7 @@ test_svm()
     <img src="https://ooo.0o0.ooo//2017//03//11//58c367760e76a.png" width="480">
 </p>
 <p align="center" style="color:rgb(220,220,220);">
-    Figure 4: The classification Dataset using LinearRegression
+    Figure 5: The classification Dataset using LinearRegression
 </p>
 
 ### Classification Tree
@@ -159,7 +161,7 @@ test_ClassificationTree()
     <img src="https://ooo.0o0.ooo//2017//03//11//58c36775113e6.png" width="480">
 </p>
 <p align="center" style="color:rgb(220,220,220);">
-    Figure 5: The digit Dataset using Classification Tree
+    Figure 6: The digit Dataset using Classification Tree
 </p>
 
 
@@ -174,7 +176,7 @@ test_kmeans_random()
     <img src="https://ooo.0o0.ooo//2017//02//18//58a8445e2114b.png" width="480">
 </p>
 <p align="center" style="color:rgb(220,220,220);">
-    Figure 6: The blobs Dataset using k-means
+    Figure 7: The blobs Dataset using k-means
 </p>
 
 ### LDA
@@ -188,7 +190,7 @@ test_LDA()
     <img src="https://ooo.0o0.ooo//2017//03//02//58b82861bade3.png" width="480">
 </p>
 <p align="center" style="color:rgb(220,220,220);">
-    Figure 7: The classification Dataset using LDA
+    Figure 8: The classification Dataset using LDA
 </p>
 
 

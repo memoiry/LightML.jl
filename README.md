@@ -30,11 +30,12 @@ demo()
 ```
 
 <p align="center">
-<img src="https://ooo.0o0.ooo//2017//03//14//58c801db36032.png" width="480"></img>
+<img src="https://ooo.0o0.ooo//2017//03//15//58c8cb6e1a1d3.png" width="480"></img>
 </p>
 <p align="center" style="color:rgb(220,220,220);">
     Figure 1: The Digit Dataset using Demo algorithms
 </p>
+
 ### Running Implementations
 
 ```julia

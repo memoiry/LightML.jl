@@ -22,6 +22,24 @@ You should access test function of every implementation for its usage in detail.
 Pkg.clone("https://github.com/memoiry/LightML.jl")
 ```
 
+
+### Running Implementations
+
+```julia
+using LightML
+test_LSC()
+```
+
+
+
+<p align="center">
+    <img src="https://ooo.0o0.ooo/2017/03/25/58d640c2c7a1a.png" width="640">
+</p>
+<p align="center" style="color:rgb(220,220,220);">
+    Figure 2: The Digit Dataset using LSC(large scale spectral clustering)
+</p>
+
+
 ### Running Demo
 
 ```julia
@@ -35,23 +53,6 @@ demo()
 <p align="center" style="color:rgb(220,220,220);">
     Figure 1: The Digit Dataset using Demo algorithms
 </p>
-
-### Running Implementations
-
-```julia
-using LightML
-test_LSC()
-```
-
-
-
-<p align="center">
-    <img src="https://ooo.0o0.ooo/2017/03/25/58d640c2c7a1a.png" width="550">
-</p>
-<p align="center" style="color:rgb(220,220,220);">
-    Figure 2: The Digit Dataset using LSC(large scale spectral clustering)
-</p>
-
 
 
 ## Current Implementations

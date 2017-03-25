@@ -46,8 +46,7 @@ test_LSC()
 
 
 <p align="center">
-    <img src="https://ooo.0o0.ooo/2017/03/25/58d640c2c7a1a.png
-" width="550">
+    <img src="https://ooo.0o0.ooo/2017/03/25/58d640c2c7a1a.png" width="550">
 </p>
 <p align="center" style="color:rgb(220,220,220);">
     Figure 2: The Digit Dataset using LSC(large scale spectral clustering)

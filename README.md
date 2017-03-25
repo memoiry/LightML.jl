@@ -36,7 +36,7 @@ test_LSC()
     <img src="https://ooo.0o0.ooo/2017/03/25/58d640c2c7a1a.png" width="640">
 </p>
 <p align="center" style="color:rgb(220,220,220);">
-    Figure 2: The Digit Dataset using LSC(large scale spectral clustering)
+    Figure 1: The Digit Dataset using LSC(large scale spectral clustering)
 </p>
 
 
@@ -51,7 +51,7 @@ demo()
 <img src="https://ooo.0o0.ooo//2017//03//15//58c8cb6e1a1d3.png" width="640"></img>
 </p>
 <p align="center" style="color:rgb(220,220,220);">
-    Figure 1: The Digit Dataset using Demo algorithms
+    Figure 2: The Digit Dataset using Demo algorithms
 </p>
 
 
@@ -201,7 +201,7 @@ test_PCA()
     <img src="https://ooo.0o0.ooo//2017//03//11//58c36773da5da.png" width="480">
 </p>
 <p align="center" style="color:rgb(220,220,220);">
-    Figure 2: The Digit Dataset using PCA
+    Figure 9: The Digit Dataset using PCA
 </p>
 
 

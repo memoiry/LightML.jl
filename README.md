@@ -40,16 +40,17 @@ demo()
 
 ```julia
 using LightML
-test_PCA()
+test_LSC()
 ```
 
 
 
 <p align="center">
-    <img src="https://ooo.0o0.ooo//2017//03//11//58c36773da5da.png" width="480">
+    <img src="https://ooo.0o0.ooo/2017/03/25/58d640c2c7a1a.png
+" width="550">
 </p>
 <p align="center" style="color:rgb(220,220,220);">
-    Figure 2: The Digit Dataset using PCA
+    Figure 2: The Digit Dataset using LSC(large scale spectral clustering)
 </p>
 
 
@@ -73,7 +74,7 @@ test_PCA()
 - [Hidden Markov Model](src/supervised_learning/hiddenMarkovModel.jl)
 - [Label propagation](src/supervised_learning/labelPropagation.jl)
 - [Random Forests](src/supervised_learning/randomForests.jl)
-- [ ] XGBoost
+- [XGBoost](src/supervised_learning/xgboost.jl)
 
 #### Unsupervised Learning:
 
@@ -81,7 +82,7 @@ test_PCA()
 - [K-Means](src/unsupervised_learning/kMeans.jl)
 - [Principal Component Analysis](src/unsupervised_learning/principalComponentAnalysis.jl)
 - [Spectral Clustering](src/unsupervised_learning/spectralCluster.jl)
-- [ ] Apriori
+- [Large Scale Spectral Clustering](src/unsupervised_learning/largeScaleSpectralClustering.jl)
 
 #### Test Example available 
 
@@ -101,6 +102,7 @@ test_PCA()
 - test_LinearRegression()
 - test_kneast_regression()
 - test_kneast_classification()
+- test_LSC()
 - test_GaussianMixture() **(Fixing)**
 - test_GDA() **(Fixing)**
 - test_HMM() **(Fixing)**
@@ -124,7 +126,6 @@ test_LinearRegression()
 ### Adaboost
 
 ```julia
-using LightML
 test_Adaboost()
 ```
 
@@ -140,7 +141,6 @@ test_Adaboost()
 ### SVM
 
 ```julia
-using LightML
 test_svm()
 ```
 
@@ -154,7 +154,6 @@ test_svm()
 ### Classification Tree
 
 ```julia
-using LightML
 test_ClassificationTree()
 ```
 
@@ -169,7 +168,6 @@ test_ClassificationTree()
 ### kmeans
 
 ```julia
-using LightML
 test_kmeans_random()
 ```
 
@@ -183,7 +181,6 @@ test_kmeans_random()
 ### LDA
 
 ```julia
-using LightML
 test_LDA()
 ```
 
@@ -194,5 +191,17 @@ test_LDA()
     Figure 8: The classification Dataset using LDA
 </p>
 
+### PCA
+
+```julia
+test_PCA()
+```
+
+<p align="center">
+    <img src="https://ooo.0o0.ooo//2017//03//11//58c36773da5da.png" width="480">
+</p>
+<p align="center" style="color:rgb(220,220,220);">
+    Figure 2: The Digit Dataset using PCA
+</p>
 
 

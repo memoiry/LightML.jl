@@ -82,8 +82,6 @@ function train!(model::GradientBoosting, X::Matrix, y::Vector)
 end
 
 
-
-
 function predict(model::GradientBoosting,
                  x::Matrix)
     count = 1

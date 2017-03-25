@@ -1,6 +1,5 @@
 
 
-
 function one_hot(y)
     n = length(unique(y))
     if minimum(y) == 0
@@ -8,7 +7,6 @@ function one_hot(y)
     elseif minimum(y) == -1 && n == 2
         y = trunc(Int64,(y + 1)/2+1)
         return eye(2)[y,:]
-
     end
     return eye(n)[y,:]
 end

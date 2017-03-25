@@ -1,7 +1,61 @@
+abstract LossFunction
+
+type LogisticLoss <: LossFunction
+    obj::Function
+    gradient::Function
+    hessian::Function
+
+    function obj(y::Array, y_pred::Array)
+        logistic_pred = sigmoid(y_pred)
+        l = - y .* log(logistic_pred)
+        r = - (1-y) .* log(1-logistic_pred)
+        loss = 1/size(y,1) * (l + r)
+        return loss
+    end
+    function gradient(y::Array, y_pred::Array)
+        return (sigmoid(y_pred) - y)
+    end
+
+    function hessian(y::Array, y_pred::Array)
+        logitsc_pred = sigmoid(y_pred)
+        val = logitsc_pred .* ( 1 - logitsc_pred)
+        return val
+    end
+
+    function LogisticLoss()
+        loss = new(obj, gradient, hessian)
+        return loss
+    end
+
+end
+
+
+type SquareLoss <: LossFunction
+    obj::Function
+    gradient::Function
+    hessian::Function
+
+    function obj(y::Array, y_pred::Array)
+        return 0.5 * sumabs2(y - y_pred) 
+    end
+    function gradient(y::Array, y_pred::Array)
+        return (y_pred - y)
+    end
+
+    function hessian(y::Array, y_pred::Array)
+        n_sample = size(y,1)
+        return ones(n_sample)
+    end
+
+    function SquareLoss()
+        loss = new(obj, gradient, hessian)
+        return loss
+    end
+end
 
 
 type DecisionNode
-    label::Union{Vector, Int64, String, Float64}
+    label::Union{Array, Int64, String, Float64}
     feature_index::Integer
     threshold::Features
     true_branch::Union{DecisionNode,String}
@@ -27,6 +81,7 @@ type RegressionTree <: DecisionTree
     min_gain::Float64 
     min_samples_split::Integer
     current_depth::Integer
+    y_num::Integer
 end  
 
 
@@ -38,6 +93,29 @@ type ClassificationTree <: DecisionTree
     current_depth::Integer
     y_num::Integer
 end
+
+type XGBoostRegressionTree <: DecisionTree
+    root::Union{DecisionNode,String}
+    max_depth::Int64 
+    min_gain::Float64 
+    min_samples_split::Int64
+    current_depth::Int64
+    loss::LogisticLoss
+    y_num::Integer
+end
+
+function XGBoostRegressionTree(;
+                      root = "nothing",
+                      min_samples_split = 2,
+                      min_gain = 1e-7,
+                      max_depth = 1e7,
+                      current_depth::Int64 = 0,
+                      loss::LogisticLoss = LogisticLoss(),
+                      y_num = 1)
+    return XGBoostRegressionTree(root, max_depth, min_gain,
+        min_samples_split, current_depth, loss, y_num)
+end
+
 
 function ClassificationTree(;
                       root = "nothing",
@@ -55,9 +133,10 @@ function RegressionTree(;
                       min_samples_split = 2,
                       min_gain = 1e-7,
                       max_depth = 1e7,
-                      current_depth = 0)
+                      current_depth = 0,
+                      y_num = 1)
     return RegressionTree(root, max_depth, min_gain,
-        min_samples_split, current_depth)
+        min_samples_split, current_depth, y_num)
 end
 
 
@@ -73,7 +152,11 @@ end
 
 
 function build_tree(model::DecisionTree, X::Matrix, y::Array)
-    model.y_num = size(y,2)
+    if typeof(model) <: XGBoostRegressionTree
+        model.y_num = trunc(Int,size(y,2)/2)
+    else
+        model.y_num = size(y,2)
+    end
     entropy = calc_entropy(y)
     largest_impurity = 0
     best_criteria = 0
@@ -86,14 +169,14 @@ function build_tree(model::DecisionTree, X::Matrix, y::Array)
             feature_values = X_y[:, i]
             unique_values = unique(feature_values)
             #For large regression problem
-            #if typeof(model) == RegressionTree
-            #    num = 8
-            #    if length(unique_values) >= num
-            #        num_ = length(unique_values)
-            #        indd = randperm(num_)[1:num]
-            #        unique_values = unique_values[indd]
-            #    end
-            #end
+            if typeof(model) == XGBoostRegressionTree
+                num = 8
+                if length(unique_values) >= num
+                    num_ = length(unique_values)
+                    indd = randperm(num_)[1:num]
+                    unique_values = unique_values[indd]
+                end
+            end
             for threshold in unique_values
                 Xy_1, Xy_2 = split_at_feature(X_y, i, threshold)
                 if size(Xy_1,1) > 0 && size(Xy_2,1) > 0
@@ -128,6 +211,14 @@ function build_tree(model::DecisionTree, X::Matrix, y::Array)
 end
 
 
+function leaf_value_calc(model::XGBoostRegressionTree, y::Array)
+    y, y_pred = split_(y)
+    nominator = sum(model.loss.gradient(y, y_pred),1)
+    denominator = sum(model.loss.hessian(y, y_pred),1)
+
+    return nominator ./ denominator
+end
+
 function leaf_value_calc(model::RegressionTree, y::Array)
     return mean(y)
 end
@@ -154,6 +245,29 @@ function leaf_value_calc(model::ClassificationTree, y::Array)
     return most_common
 end
 
+
+function split_(y)
+    col = trunc(Int,size(y,2)/2)
+    return y[:,1:col],y[:,(col+1):end]
+end
+
+function _gain_(model::XGBoostRegressionTree, y, y_pred)
+    grad = sum(model.loss.gradient(y, y_pred))
+    nominator = grad .* grad
+    denominator = sum(model.loss.hessian(y, y_pred))
+    return 0.5 * nominator / denominator
+end
+
+
+function impurity_calc(model::XGBoostRegressionTree, y, y1, y2)
+    y, y_pred = split_(y)
+    y1, y1_pred = split_(y1)
+    y2, y2_pred = split_(y2)
+    true_gain = _gain_(model, y1,y1_pred)
+    false_gain = _gain_(model, y2,y2_pred)
+    gain = _gain_(model, y, y_pred)
+    return true_gain + false_gain - gain
+end
 
 
 function impurity_calc(model::RegressionTree, y, y1, y2)
@@ -189,7 +303,6 @@ function predict(model::DecisionTree,
             res[i,:] = predict(model.root, x[i,:])
         end
     end
-
     return res
 end
 
@@ -253,8 +366,6 @@ function test_ClassificationTree()
     y_test = unhot(y_test)
     predictions = unhot(predictions)
     print("classification accuracy", accuracy(y_test, predictions))
-
-
     #PCA
 
     #pca_model = PCA()
@@ -273,6 +384,8 @@ function test_RegressionTree()
     PyPlot.scatter(X_test, predictions, color = "green")
     legend(loc="upper right",fancybox="true")
 end
+
+
 
 
 

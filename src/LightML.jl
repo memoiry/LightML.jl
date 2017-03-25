@@ -9,6 +9,10 @@ using Distributions
 using PyCall
 using PyPlot
 using DataStructures
+using Distances
+using Clustering
+
+
 
 @pyimport sklearn.datasets as dat
 
@@ -106,6 +110,7 @@ include("supervised_learning/neuralNetwork_bp.jl")
 include("supervised_learning/support_vector_machine.jl")
 include("supervised_learning/adaboost.jl")
 include("supervised_learning/randomForests.jl")
+include("supervised_learning/xgboost.jl")
 include("supervised_learning/GradientBoostingTree.jl")
 
 
@@ -115,6 +120,7 @@ include("unsupervised_learning/gaussianMixtureModel.jl")
 include("unsupervised_learning/kMeans.jl")
 include("unsupervised_learning/principalComponentAnalysis.jl")
 include("unsupervised_learning/spectralCluster.jl")
+include("unsupervised_learning/largeScaleSpectralClustering.jl")
 
 #Utils
 

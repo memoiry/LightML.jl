@@ -4,3 +4,6 @@ ForwardDiff
 PyPlot
 Distributions
 PyCall
+Clustering
+Distances
+DataStructures

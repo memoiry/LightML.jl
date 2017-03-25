@@ -24,4 +24,9 @@ There are implementation not working as expected, so further debug is needed.
 
 Feel free to use the [frame.jl](src/utils/frame.jl) to develop your version of ML algorithm.
 
+#### Miscellaneous
+
+- [ ] Eliminate ForwardDiff dependency, this involves linear regression code and should be easy to do.
+- [ ] Eliminate PyCall dependency, this involves eliminating the dependency on python scikit-learn's datasets for testing purpose.
+
 

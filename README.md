@@ -61,13 +61,13 @@ demo()
 - [Adaboost](src/supervised_learning/adaboost.jl)
 - [Decision Tree](src/supervised_learning/decisionTree.jl)
 - [Gradient Boosting](src/supervised_learning/GradientBoostingTree.jl)
+- [Gaussian Discriminant Analysis](src/supervised_learning/gaussianDiscriminantAnalysis.jl)
 - [K Nearest Neighbors](src/supervised_learning/kNearestNeighbors.jl)
 - [Linear Discriminant Analysis](src/supervised_learning/linearDiscriminantAnalysis.jl)
 - [Linear Regression](src/supervised_learning/baseRegression.jl)
 - [Logistic Regression](src/supervised_learning/baseRegression.jl)
 - [Multilayer Perceptron](src/supervised_learning/neuralNetwork_bp.jl)
 - [Naive Bayes](src/supervised_learning/naivdBayes.jl)
-- [hiddenMarkovModel](src/supervised_learning/hiddenMarkovModel.jl)
 - [Ridge Regression](src/supervised_learning/baseRegression.jl)
 - [Lasso Regression](src/supervised_learning/baseRegression.jl)
 - [Support Vector Machine](src/supervised_learning/support_vector_machine.jl)
@@ -106,6 +106,13 @@ demo()
 - test_GaussianMixture() **(Fixing)**
 - test_GDA() **(Fixing)**
 - test_HMM() **(Fixing)**
+- test_xgboost **(Fixing)**
+
+## Contribution
+
+Please examine the [todo list](todo.md) for contribution detials.
+
+Any Pull request is welcome. 
 
 ## Example
 

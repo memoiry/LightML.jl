@@ -114,7 +114,7 @@ Please examine the [todo list](todo.md) for contribution detials.
 
 Any Pull request is welcome. 
 
-## Example
+## Selected Examples
 
 ### LinearRegression
 

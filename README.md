@@ -1,5 +1,8 @@
 # LightML.jl
 
+
+[![Build Status](https://travis-ci.org/memoiry/LightML.jl.svg?branch=master)](https://travis-ci.org/memoiry/LightML.jl)
+
 ### About
 LightML.jl is a collection of reimplementation of general machine learning algorithm in Julia. 
 

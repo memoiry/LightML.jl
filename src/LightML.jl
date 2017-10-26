@@ -1,6 +1,4 @@
-
 module LightML
-
 
 using Gadfly
 using DataFrames
@@ -92,7 +90,7 @@ export
 
 
 
-typealias Features Union{String, Real}
+Features = Union{String, Real}
 
 
 

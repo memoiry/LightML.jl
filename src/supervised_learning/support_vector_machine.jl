@@ -1,5 +1,5 @@
 
-typealias Arr Union{Vector, Matrix} 
+const Arr = Union{Vector, Matrix} 
 
 type SVM
     X::Matrix

@@ -1,9 +1,10 @@
+julia 0.6
 Gadfly
 DataFrames
 ForwardDiff
-PyPlot
 Distributions
 PyCall
-Clustering
-Distances
+PyPlot
 DataStructures
+Distances
+Clustering

@@ -35,8 +35,9 @@ function train!(model::Adaboost, X::Matrix, y::Vector)
                     end
                     err += w[sample_ind] * (y[sample_ind] != pred)
                 end
+                err = err/sum(w)
                 if err > 0.5
-                    err = 1 - 0.5
+                    err = 1 - err
                     polarity_ = -1
                 end
 

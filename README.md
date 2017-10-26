@@ -49,7 +49,7 @@ It's actually same with the procedure above.
 
 Then every dependency should be configured, you can simply run command below to install the package.
 
-```
+```julia
 Pkg.clone("https://github.com/memoiry/LightML.jl")
 ```
 

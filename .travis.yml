@@ -8,8 +8,8 @@ julia:
   - nightly
 notifications:
   email: false
-git:
-  depth: 99999999
+#git:
+#  depth: 99999999
 
 ## uncomment the following lines to allow failures on nightly julia
 ## (tests will run but not make your overall status red)
@@ -26,6 +26,9 @@ git:
 #  - if [ $TRAVIS_OS_NAME = osx ]; then brew install gcc; fi
 before_install:
   - julia -e 'ENV["PYTHON"]=""; Pkg.add("Conda"); using Conda;  Conda.add("python==2.7.13"); Conda.add("matplotlib"); Conda.add("scikit-learn"); Pkg.add("PyCall"); Pkg.build("PyCall"); Pkg.add("PyPlot");'
+script:
+  - LD_PRELOAD=${HOME}/.julia/v0.6/Conda/deps/usr/lib/libz.so'
+  - julia -e 'Pkg.clone(pwd()); Pkg.build("LightML"); Pkg.test("LightML"; coverage=true)
 ## uncomment the following lines to override the default test script
 #script:
 #  - julia -e 'Pkg.clone(pwd()); Pkg.build("LightML"); Pkg.test("LightML"; coverage=true)'

@@ -23,12 +23,39 @@ You should access test function of every implementation for its usage in detail.
 
 ### Installation
 
+First make sure you have correct `python` dependency. You can use the Conda Julia package to install more Python packages, and import Conda to print the Conda.PYTHONDIR directory where python was installed. On GNU/Linux systems, PyCall will default to using the python program (if any) in your PATH.
+
+The advantage of a Conda-based configuration is particularly compelling if you are installing PyCall in order to use packages like PyPlot.jl or SymPy.jl, as these can then automatically install their Python dependencies. 
+
+```julia
+ENV["PYTHON"]=""
+Pkg.add("Conda")
+using Conda
+Conda.add("python==2.7.13")
+Conda.add("matplotlib")
+Conda.add("scikit-learn")
+Pkg.add("PyCall")
+Pkg.build("PyCall")
+```
+
+or you can simply
+
+```julia
+Pkg.build("LightML")
+```
+
+It's actually same with the procedure above.
+
+
+Then every dependency should be configured, you can simply run command below to install the package.
+
 ```julia
 Pkg.clone("https://github.com/memoiry/LightML.jl")
 ```
 
-
 ### Running Implementations
+
+Let's first try the overall functionality test.
 
 ```julia
 using LightML

@@ -24,7 +24,8 @@ git:
 #    - gfortran
 #before_script: # homebrew for mac
 #  - if [ $TRAVIS_OS_NAME = osx ]; then brew install gcc; fi
-
+before_install:
+  - julia -e 'ENV["PYTHON"]=""; Pkg.add("Conda"); using Conda;  Conda.add("python==2.7.13"); Conda.add("matplotlib"); Conda.add("sklearn"); Pkg.add("PyCall"); Pkg.build("PyCall"); Pkg.add("PyPlot");'
 ## uncomment the following lines to override the default test script
 #script:
 #  - julia -e 'Pkg.clone(pwd()); Pkg.build("LightML"); Pkg.test("LightML"; coverage=true)'
